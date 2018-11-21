@@ -1,0 +1,14 @@
+# ===================================
+#  Import/Export Behavior Config
+# ===================================
+
+export:
+    title: utopigs.seo::lang.seo.export
+    modelClass: Utopigs\Seo\Models\SeoExport
+    list: $/utopigs/seo/models/seoimportexport/columns.yaml
+    redirect: utopigs/seo/seo
+import:
+    title: utopigs.seo::lang.seo.import
+    modelClass: Utopigs\Seo\Models\SeoImport
+    list: $/utopigs/seo/models/seoimportexport/columns.yaml
+    redirect: utopigs/seo/seo

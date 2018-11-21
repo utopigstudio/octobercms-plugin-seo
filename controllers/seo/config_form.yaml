@@ -1,0 +1,18 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+form: ~/plugins/utopigs/seo/models/seo/fields.yaml
+modelClass: Utopigs\Seo\Models\Seo
+defaultRedirect: utopigs/seo/seo
+
+create:
+  title: backend::lang.form.create_title
+  redirect: utopigs/seo/seo/update/:id
+  redirectClose: utopigs/seo/seo/
+  flashSave: backend::lang.form.create_success
+
+update:
+  title: backend::lang.form.update_title
+  redirectClose: utopigs/seo/seo
+  flashSave: backend::lang.form.update_success

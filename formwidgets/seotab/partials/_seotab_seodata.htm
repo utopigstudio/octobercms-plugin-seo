@@ -1,0 +1,21 @@
+<div class="form-group">
+    <?php foreach ($alternateLocales as $locale) {
+        $seoData->translateContext($locale); ?>
+        <p class="help-block"><strong>[<?= $locale ?>]</strong></p>
+        <p class="help-block"><?= trans("utopigs.seo::lang.seo.title")?>: <?= $seoData->title ?></p>
+        <p class="help-block"><?= trans("utopigs.seo::lang.seo.description")?>: <?= $seoData->description ?></p>
+        <?php if ($seoData->keywords) { ?>
+        <p class="help-block"><?= trans("utopigs.seo::lang.seo.keywords")?>: <?= $seoData->keywords ?></p>
+        <?php } ?>
+    <?php } ?>
+    <?php if ($seoData->image) { ?>
+        <br />
+        <p class="help-block"><strong><?= trans("utopigs.seo::lang.seo.image")?>:</strong></p>
+        <p class="help-block">
+        <img height="260px" src="<?= $seoData->image->path ?>"></p>
+    <?php } ?>        
+    <br />
+    <a class="btn btn-default" type="button" href="<?= $editSeoUrl ?>">
+    <?= trans("utopigs.seo::lang.seotab.button")?>
+    </a>
+</div>

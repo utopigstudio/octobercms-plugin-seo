@@ -1,0 +1,14 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+utopigs_seotab@update:
+    tab: utopigs.seo::lang.seotab.title
+    type: utopigs_seotab
+    pageType: cms-page
+    disabled: true
+utopigs_seotab@create:
+    tab: utopigs.seo::lang.seotab.title
+    type: partial
+    path: $/utopigs/seo/formwidgets/seotab/partials/_seotab_create.htm
+    disabled: true

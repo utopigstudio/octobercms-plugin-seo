@@ -1,0 +1,16 @@
+# ===================================
+#  Column Definitions
+# ===================================
+
+columns:
+    type:
+        label: utopigs.seo::lang.seo.type
+    model_title:
+        label: utopigs.seo::lang.seo.page
+        sortable: false
+    title:
+        label: utopigs.seo::lang.seo.title
+    description:
+        label: utopigs.seo::lang.seo.description
+    keywords:
+        label: utopigs.seo::lang.seo.keywords

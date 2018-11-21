@@ -1,0 +1,19 @@
+# ===================================
+#  Column Definitions
+# ===================================
+
+columns:
+    locale:
+        label: locale
+    type:
+        label: type
+    reference:
+        label: reference
+    title:
+        label: title
+    description:
+        label: description
+    keywords:
+        label: keywords
+    image:
+        label: image

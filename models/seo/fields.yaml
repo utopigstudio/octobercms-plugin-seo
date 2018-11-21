@@ -1,0 +1,35 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+    type:
+        label: utopigs.seo::lang.seo.type
+        type: dropdown
+        span: left
+    reference:
+        label: utopigs.seo::lang.seo.page
+        type: dropdown
+        span: left
+        dependsOn: type
+    title:
+        label: utopigs.seo::lang.seo.title
+        span: left
+        attributes:
+            maxlength: 70
+    description:
+        label: utopigs.seo::lang.seo.description
+        span: left
+        attributes:
+            maxlength: 155
+    keywords:
+        label: utopigs.seo::lang.seo.keywords
+        span: left
+        comment: utopigs.seo::lang.seo.keywords_hint
+        attributes:
+            maxlength: 255
+    image:
+        label: utopigs.seo::lang.seo.image
+        type: fileupload
+        mode: image
+        imageHeight: 260

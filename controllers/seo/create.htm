@@ -1,0 +1,24 @@
+<?= Form::open(['class' => 'layout']) ?>
+
+    <div class="layout-row">
+        <?= $this->formRender() ?>
+    </div>
+
+    <div class="form-buttons">
+        <div class="loading-indicator-container">
+            <button
+                type="button"
+                data-request="onSave"
+                data-request-data="close:true"
+                data-hotkey="ctrl+enter, cmd+enter, enter"
+                data-load-indicator="<?= trans('backend::lang.form.creating') ?>"
+                class="btn btn-default">
+                <?= trans('backend::lang.form.create') ?>
+            </button>
+            <span class="btn-text">
+                or <a href="<?= $this->backUrl ?>"><?= trans('backend::lang.form.cancel') ?></a>
+            </span>
+        </div>
+    </div>
+
+<?= Form::close() ?>

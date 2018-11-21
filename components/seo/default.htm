@@ -1,0 +1,14 @@
+
+    <title>{{ this.page.title }}</title>
+    {% if seo.hasSeoPage %}
+    <meta name="description" content="{{ this.page.description }}" />
+    <meta name="title" content="{{ this.page.title }}" />
+    {% if this.page.keywords %}
+    <meta name="keywords" content="{{ this.page.keywords }}" />
+    {% endif %}
+    <meta property="og:title" content="{{ this.page.title }}" />
+    <meta property="og:description" content="{{ this.page.description }}" />
+    {% if this.page.seo_image %}
+    <meta property="og:image" content="{{ this.page.seo_image.getPath() }}" />
+    {% endif %}
+    {% endif %}
