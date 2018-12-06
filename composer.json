@@ -1,19 +1,19 @@
 {
-    "name": "fw/seo",
+    "name": "utopigs/seo",
     "type": "october-plugin",
     "description": "Multilanguage SEO plugin for October CMS",
     "keywords": ["october", "octobercms", "seo", "translate"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Maria Vilaró",
-            "email": "maria.vilaro@gmail.com"
+            "name": "Utopig Studio",
+            "email": "info@utopigstudio.com"
         }
     ],
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/mariavilaro/october-plugin-mlseo"
+            "url": "https://github.com/utopigstudio/octobercms-plugin-seo"
         }
     ],
     "require": {

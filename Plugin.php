@@ -19,10 +19,11 @@ class Plugin extends PluginBase
     public function pluginDetails()
 	{
 		return [
-			'name'			=> 'utopigs.seo::lang.plugin.name',
-			'description'	=> 'utopigs.seo::lang.plugin.description',
-			'author'		=> 'Maria Vilaró',
-			'icon'			=> 'icon-line-chart'
+			'name'		  => 'utopigs.seo::lang.plugin.name',
+			'description' => 'utopigs.seo::lang.plugin.description',
+			'author'	  => 'Utopig Studio',
+			'icon'		  => 'icon-line-chart',
+            'homepage'    => 'https://github.com/utopigstudio/octobercms-plugin-seo'
 		];
 	}
 
