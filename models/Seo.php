@@ -181,7 +181,14 @@ class Seo extends Model
         if (is_array($apiResult)) {
             foreach ($apiResult as $typeInfo) {
                 if (isset($typeInfo['references']) && isset($typeInfo['references'][$this->reference])) {
-                    return ($typeInfo['references'][$this->reference]);
+                    if (is_array($typeInfo['references'][$this->reference])) {
+                        if (isset($typeInfo['references'][$this->reference]['title'])) {
+                            return $typeInfo['references'][$this->reference]['title'];
+                        }
+                        return '#' . $this->reference . ' [no title]';
+                    } else {
+                        return ($typeInfo['references'][$this->reference]);
+                    }
                 }
             }
         }

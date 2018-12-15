@@ -1,3 +1,5 @@
 1.0.1:
     - First version of Utopigs Seo plugin
     - create_data_table.php
+1.0.2:
+    - Fix bug with elements with nested items
