@@ -3,3 +3,7 @@
     - create_data_table.php
 1.0.2:
     - Fix bug with elements with nested items
+1.1.0:
+    - Add sitemap functionality
+    - Fix some bugs with nested items
+    - create_sitemaps_table.php

@@ -1,0 +1,52 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+
+    type:
+        label: utopigs.seo::lang.sitemap_item.type
+        type: dropdown
+
+    url:
+        label: utopigs.seo::lang.sitemap_item.url
+
+    reference:
+        label: utopigs.seo::lang.sitemap_item.reference
+        type: dropdown
+        cssClass: input-sidebar-control
+
+    cmsPage:
+        label: utopigs.seo::lang.sitemap_item.cms_page
+        comment: utopigs.seo::lang.sitemap_item.cms_page_comment
+        type: dropdown
+        cssClass: input-sidebar-control
+
+    priority:
+        span: left
+        label: utopigs.seo::lang.sitemap_item.priority
+        type: dropdown
+        options:
+            '0.1': '0.1'
+            '0.2': '0.2'
+            '0.3': '0.3'
+            '0.4': '0.4'
+            '0.5': '0.5'
+            '0.6': '0.6'
+            '0.7': '0.7'
+            '0.8': '0.8'
+            '0.9': '0.9'
+            '1.0': '1.0'
+
+    changefreq:
+        span: right
+        label: utopigs.seo::lang.sitemap_item.changefreq
+        type: dropdown
+        options:
+            always: utopigs.seo::lang.sitemap_item.always
+            hourly: utopigs.seo::lang.sitemap_item.hourly
+            daily: utopigs.seo::lang.sitemap_item.daily
+            weekly: utopigs.seo::lang.sitemap_item.weekly
+            monthly: utopigs.seo::lang.sitemap_item.monthly
+            yearly: utopigs.seo::lang.sitemap_item.yearly
+            never: utopigs.seo::lang.sitemap_item.never

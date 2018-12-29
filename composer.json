@@ -1,8 +1,8 @@
 {
     "name": "utopigs/seo",
     "type": "october-plugin",
-    "description": "Multilanguage SEO plugin for October CMS",
-    "keywords": ["october", "octobercms", "seo", "translate"],
+    "description": "SEO & Sitemap plugin for multi-lingual October CMS sites",
+    "keywords": ["october", "octobercms", "seo", "sitemap", "translate"],
     "license": "MIT",
     "authors": [
         {

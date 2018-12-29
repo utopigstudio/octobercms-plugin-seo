@@ -121,7 +121,7 @@ class Seo extends Model
 
         $items = [];
 
-        $iterator = function($children) use (&$iterator) {
+        $iterator = function($children) use (&$iterator, $filterValue) {
             $child_items = [];
 
             foreach ($children as $child_key => $child) {
@@ -179,16 +179,33 @@ class Seo extends Model
         $apiResult = Event::fire('pages.menuitem.getTypeInfo', [$this->type]);
 
         if (is_array($apiResult)) {
-            foreach ($apiResult as $typeInfo) {
-                if (isset($typeInfo['references']) && isset($typeInfo['references'][$this->reference])) {
-                    if (is_array($typeInfo['references'][$this->reference])) {
-                        if (isset($typeInfo['references'][$this->reference]['title'])) {
-                            return $typeInfo['references'][$this->reference]['title'];
+
+            $itemReference = $this->reference;
+
+            $iterator = function($items, $nesting = true) use (&$iterator, $itemReference) {
+                if (isset($items[$itemReference])) {
+                    if (is_array($items[$itemReference])) {
+                        if (isset($items[$itemReference]['title'])) {
+                            return $items[$itemReference]['title'];
                         }
-                        return '#' . $this->reference . ' [no title]';
+                        return '#' . $itemReference . ' [no title]';
                     } else {
-                        return ($typeInfo['references'][$this->reference]);
+                        return ($items[$itemReference]);
                     }
+                } elseif ($nesting) {
+                    foreach ($items as $item) {
+                        if (isset($item['items']) && is_array($item['items']) && !empty($item['items'])) {
+                            return $iterator($item['items']);
+                        }
+                    }
+                }
+            };
+
+            foreach ($apiResult as $typeInfo) {
+                if (isset($typeInfo['references']) && is_array($typeInfo['references']) && !empty($typeInfo['references'])) {
+                    $nesting = !empty($typeInfo['nesting']);
+                    $title = $iterator($typeInfo['references'], $nesting);
+                    if ($title) return $title;
                 }
             }
         }

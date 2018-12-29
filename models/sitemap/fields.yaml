@@ -1,0 +1,13 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    stretch: true
+    cssClass: tabs-no-inset
+
+    fields:
+        items:
+            stretch: true
+            tab: utopigs.seo::lang.sitemap_item.definition
+            type: Utopigs\Seo\FormWidgets\SitemapItems

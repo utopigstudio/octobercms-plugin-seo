@@ -34,7 +34,7 @@ class Seo extends \Backend\Classes\Controller {
 	public function __construct()
 	{
 	    parent::__construct();
-        BackendMenu::setContext('Utopigs.Seo', 'seo');
+        BackendMenu::setContext('Utopigs.Seo', 'seo', 'seo');
 
         $this->backUrl = Backend::url('utopigs/seo/seo');
 

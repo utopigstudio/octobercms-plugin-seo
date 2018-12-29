@@ -40,7 +40,11 @@ class Plugin extends PluginBase
         return [
             'utopigs.seo.manage'  => [
                 'tab'   => 'utopigs.seo::lang.plugin.name',
-                'label' => 'utopigs.seo::lang.plugin.manage'
+                'label' => 'utopigs.seo::lang.plugin.manage_seo'
+            ],
+            'utopigs.seo.sitemap' => [
+                'tab'   => 'utopigs.seo::lang.plugin.name',
+                'label' => 'utopigs.seo::lang.plugin.manage_sitemap',
             ],
         ];
     }
@@ -54,6 +58,20 @@ class Plugin extends PluginBase
                 'iconSvg'     => 'plugins/utopigs/seo/assets/images/seo-icon.svg',
                 'url'         => Backend::url('utopigs/seo/seo'),
                 'permissions' => ['utopigs.seo.manage'],
+                'sideMenu' => [
+                    'seo' => [
+                        'label' => 'utopigs.seo::lang.seo.menu',
+                        'icon' => 'icon-line-chart',
+                        'url' => Backend::url('utopigs/seo/seo'),
+                        'permissions' => ['utopigs.seo.manage'],
+                    ],
+                    'sitemap' => [
+                        'label' => 'utopigs.seo::lang.sitemap.menu',
+                        'icon' => 'icon-sitemap',
+                        'url' => Backend::url('utopigs/seo/sitemap'),
+                        'permissions' => ['utopigs.seo.sitemap'],
+                    ],
+                ]
             ]
         ];
         

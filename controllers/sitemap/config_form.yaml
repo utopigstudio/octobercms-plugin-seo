@@ -1,0 +1,21 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: utopigs.seo::lang.sitemap_item.definition
+
+# Model Form Field configuration
+form: $/utopigs/seo/models/sitemap/fields.yaml
+
+# Model Class name
+modelClass: Utopigs\Seo\Models\Sitemap
+
+# Default redirect location
+defaultRedirect: utopigs/seo/sitemap
+
+# Update page
+update:
+    title: utopigs.seo::lang.plugin.name
+    redirect: utopigs/seo/sitemap
+    redirectClose: system/settings

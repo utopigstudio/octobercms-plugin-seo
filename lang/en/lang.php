@@ -3,8 +3,9 @@
 return [
     'plugin' => [
         'name' => 'SEO',
-        'description' => 'Multilanguage SEO',
-        'manage' => 'Manage SEO',
+        'description' => 'Multi-lingual SEO & Sitemap',
+        'manage_seo' => 'Manage SEO',
+        'manage_sitemap' => 'Access sitemap definitions page',
     ],
     'component_seo' => [
         'name' => 'SEO',
@@ -31,6 +32,7 @@ return [
         ],
     ],
     'seo' => [
+        'menu' => 'SEO',
         'update_title' => 'Update SEO',
         'create_title' => 'Create SEO Page',
         'type' => 'Page type',
@@ -42,7 +44,7 @@ return [
         'image' => 'Image for social networks',
         'import' => 'Import',
         'export' => 'Export',
-        'upload_csv_or_zip_file' => 'Upload a CSV or ZIP file'
+        'upload_csv_or_zip_file' => 'Upload a CSV or ZIP file',
     ],
     'seotab' => [
         'title' => 'SEO',
@@ -52,5 +54,41 @@ return [
         'missing_property' => 'You must define a $seoPageType property in :model to use the SeoModel extension.',
         'mapped' => 'SEO data automatically retrieved from :model fields',
         'zip_doesnt_have_csv_file' => 'ZIP file must contain a csv file with import data',
-    ]
+    ],
+    'sitemap' => [
+        'menu' => 'Sitemap',
+        'not_found' => 'No sitemap definition was found. Try creating one first.',
+    ],
+    'sitemap_item' => [
+        'location' => 'Location:',
+        'priority' => 'Priority',
+        'changefreq' => 'Change frequency',
+        'always' => 'always',
+        'hourly' => 'hourly',
+        'daily' => 'daily',
+        'weekly' => 'weekly',
+        'monthly' => 'monthly',
+        'yearly' => 'yearly',
+        'never' => 'never',
+        'editor_title' => 'Edit Sitemap Item',
+        'type' => 'Type',
+        'url' => 'URL',
+        'reference' => 'Reference',
+        'title_required' => 'The title is required',
+        'unknown_type' => 'Unknown item type',
+        'unnamed' => 'Unnamed item',
+        'add_item' => 'Add <u>I</u>tem',
+        'new_item' => 'New item',
+        'cms_page' => 'CMS Page',
+        'cms_page_comment' => 'Select the page to use for the URL address.',
+        'reference_required' => 'The item reference is required.',
+        'url_required' => 'The URL is required',
+        'cms_page_required' => 'Please select a CMS page',
+        'page' => 'Page',
+        'check' => 'Check',
+        'definition' => 'Definition',
+        'save_definition' => 'Saving Definition...',
+        'load_indicator' => 'Emptying Definition...',
+        'empty_confirm' => 'Empty this definition?',
+    ],
 ];
