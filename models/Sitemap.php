@@ -217,10 +217,10 @@ class Sitemap extends Model
 
         $xml = $this->makeXmlObject();
         $urlSet = $xml->createElement('urlset');
-        $urlSet->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-        $urlSet->setAttribute('xmlns:xhtml', 'http://www.w3.org/1999/xhtml');
-        $urlSet->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $urlSet->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
+        $urlSet->setAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
+        $urlSet->setAttribute('xmlns:xhtml', 'https://www.w3.org/1999/xhtml');
+        $urlSet->setAttribute('xmlns:xsi', 'https://www.w3.org/2001/XMLSchema-instance');
+        $urlSet->setAttribute('xsi:schemaLocation', 'https://www.sitemaps.org/schemas/sitemap/0.9 https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
 
         return $this->urlSet = $urlSet;
     }
