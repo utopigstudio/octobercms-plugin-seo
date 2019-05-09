@@ -58,6 +58,11 @@ class Sitemap extends Model
      */
     protected $xmlObject;
 
+    /**
+     * @var string The protocol used to refer to the schema and namespace attributes
+     */
+    protected $protocol = 'http';
+
     public function beforeSave()
     {
         $this->data = (array) $this->items;
@@ -68,11 +73,13 @@ class Sitemap extends Model
         $this->items = SitemapItem::initFromArray($this->data);
     }
 
-    public function generateSitemap()
+    public function generateSitemap($protocol = 'http')
     {
         if (!$this->items) {
             return;
         }
+
+        $this->protocol = $protocol;
 
         $currentUrl = Request::path();
         $theme = Theme::load($this->theme);
@@ -217,10 +224,10 @@ class Sitemap extends Model
 
         $xml = $this->makeXmlObject();
         $urlSet = $xml->createElement('urlset');
-        $urlSet->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-        $urlSet->setAttribute('xmlns:xhtml', 'http://www.w3.org/1999/xhtml');
-        $urlSet->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $urlSet->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
+        $urlSet->setAttribute('xmlns', $this->protocol . '://www.sitemaps.org/schemas/sitemap/0.9');
+        $urlSet->setAttribute('xmlns:xhtml', $this->protocol . '://www.w3.org/1999/xhtml');
+        $urlSet->setAttribute('xmlns:xsi', $this->protocol . '://www.w3.org/2001/XMLSchema-instance');
+        $urlSet->setAttribute('xsi:schemaLocation', $this->protocol . '://www.sitemaps.org/schemas/sitemap/0.9 ' . $this->protocol . '://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
 
         return $this->urlSet = $urlSet;
     }

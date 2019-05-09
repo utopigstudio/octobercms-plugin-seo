@@ -188,6 +188,12 @@ Once this plugin the sitemap has been configured, it can be viewed by accessing 
 
 You should add this url to your robots.txt file.
 
+This sitemap will not render in browsers, this is a known issue. Unfortunately, the only known way to solve this issue makes the sitemap incompatible with Google Search Console. As a workaround, a sitemap-debug.xml is also generated. This sitemap renders ok in browsers and it can be viewed by opening this URL:
+
+    http://example.com/sitemap-debug.xml
+
+THIS SITEMAP IS ONLY FOR DEBUG PURPOSES, DON'T SUBMIT THIS URL TO GOOGLE SEARCH CONSOLE.
+
 ## Managing a sitemap definition
 
 The sitemap is managed by selecting Sitemap from the Seo plugin menu. There is a single sitemap definition for each theme and it will be created automatically.

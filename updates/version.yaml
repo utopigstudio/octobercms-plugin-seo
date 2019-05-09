@@ -11,3 +11,5 @@
     - Fix browser render issue
 1.1.2:
     - Undo last change to fix Google Search Console sitemap fetch issues
+1.1.3:
+    - Add a sitemap-debug.xml that renders ok (using https protocol for the namespace attributes) to be able to debug sitemap issues visually
