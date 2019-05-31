@@ -3,6 +3,7 @@
 use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
 use Backend;
+use Utopigs\Seo\Classes\EventsManager;
 
 class Plugin extends PluginBase
 {
@@ -26,6 +27,19 @@ class Plugin extends PluginBase
             'homepage'    => 'https://github.com/utopigstudio/octobercms-plugin-seo'
 		];
 	}
+
+    /**
+     * Attach the Rainlab.Blog events
+     * Auto create and delete the Seo records for blog posts and categories
+     * @author Erwan Regnier
+     * @link https://eregnier.it
+     */
+    public function boot()
+    {
+        $eventmanager = new EventsManager;
+        $eventmanager->subscribeBlogPostEvents();
+        $eventmanager->subscribeBlogCategoryEvents();
+    }
 
 	public function registerComponents()
 	{
