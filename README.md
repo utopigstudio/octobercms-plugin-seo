@@ -54,6 +54,12 @@ If you use Rainlab.Pages plugin, you can also create SEO data for this static pa
 
 Blog plugin Post and Category pages are automatically supported. After installing the Blog plugin and creating post and category pages, just select the types "Blog Post" or "Blog Category" from the Type dropdown, then select one of the pages and fill the data.
 
+You will also need to add the SeoModel component to the post or category pages (no need to set tye pageType and pageProperty options):
+
+```
+[seoModel]
+```
+
 ### Support for custom models
 
 You can create SEO Data for your own models.

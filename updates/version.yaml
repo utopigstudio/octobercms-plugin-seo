@@ -17,3 +17,6 @@
     - Fix bug model image not showing
 1.1.5:
     - Fix bug with nested categories
+1.1.6:
+    - Try to retrieve image from defaults if not specified
+    - Autofill properties for blog post and category pages
