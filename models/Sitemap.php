@@ -333,7 +333,7 @@ class Sitemap extends Model
                 return;
             }
             foreach ($categories as $category) {
-                $result['items'][] = self::getMenuItem($page, $category, $url, $paramName);
+                $result['items'][] = self::getMenuItem($page, $category, $paramName);
             }
         }
 
