@@ -83,7 +83,7 @@ class SeoModel extends ComponentBase
         if ($seo->keywords) {
             $this->page->meta_keywords = $this->page->keywords = $seo->keywords;
         }
-        if ($seo->seo_image) {
+        if ($seo->image) {
             $this->page->seo_image = $seo->image;
         }
 
