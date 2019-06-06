@@ -133,10 +133,15 @@ class Seo extends Model
                         }
                     }
                     if (!empty($child['items'])) {
-                        $child_items = array_replace($child_items, $iterator($child['items']));
+                        $child_items = array_replace($child_items, $iterator($child['items'], $filterValue));
                     }
                 } else {
-                    $child_items[$child_key] = $child;
+                    if (!$filterValue || $filterValue == $child_key) {
+                        $child_items[$child_key] = $child;
+                        if ($filterValue == $child_key) {
+                            return $child_items;
+                        }
+                    }
                 }
             }
 
@@ -155,7 +160,7 @@ class Seo extends Model
                                 }
                             }
                             if (!empty($item['items'])) {
-                                $items = array_replace($items, $iterator($item['items']));
+                                $items = array_replace($items, $iterator($item['items'], $filterValue));
                             }
                         } else {
                             if (!$filterValue || $filterValue == $key) {

@@ -15,3 +15,5 @@
     - Add a sitemap-debug.xml that renders ok (using https protocol for the namespace attributes) to be able to debug sitemap issues visually
 1.1.4:
     - Fix bug model image not showing
+1.1.5:
+    - Fix bug with nested categories
