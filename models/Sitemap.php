@@ -200,6 +200,7 @@ class Sitemap extends Model
         $urlSet = $this->makeUrlSet();
         $xml = $this->makeXmlObject();
         $xml->appendChild($urlSet);
+        $xml->formatOutput = Config::get('utopigs.seo::formatXmlOutput', false);
 
         return $xml->saveXML();
     }
