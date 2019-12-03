@@ -286,15 +286,12 @@ class Sitemap extends Model
         $url->appendChild($xml->createElement('lastmod', $lastModified));
         $url->appendChild($xml->createElement('changefreq', $frequency));
         $url->appendChild($xml->createElement('priority', $priority));
-        $altHrefLang = Config::get('utopigs.seo::altHrefLang', true);
-        if ($altHrefLang) {
-            foreach ($alternateLocaleUrls as $locale => $locale_url) {
-                $alternateUrl = $xml->createElement('xhtml:link');
-                $alternateUrl->setAttribute('rel', 'alternate');
-                $alternateUrl->setAttribute('hreflang', $locale);
-                $alternateUrl->setAttribute('href', $locale_url);
-                $url->appendChild($alternateUrl);
-            }
+        foreach ($alternateLocaleUrls as $locale => $locale_url) {
+            $alternateUrl = $xml->createElement('xhtml:link');
+            $alternateUrl->setAttribute('rel', 'alternate');
+            $alternateUrl->setAttribute('hreflang', $locale);
+            $alternateUrl->setAttribute('href', $locale_url);
+            $url->appendChild($alternateUrl);
         }
 
         return $url;
