@@ -20,3 +20,5 @@
 1.1.6:
     - Try to retrieve image from defaults if not specified
     - Autofill properties for blog post and category pages
+1.1.7:
+    - Add translations for catalan
