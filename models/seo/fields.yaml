@@ -32,4 +32,5 @@ fields:
         label: utopigs.seo::lang.seo.image
         type: fileupload
         mode: image
+        span: left
         imageHeight: 260
