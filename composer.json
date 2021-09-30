@@ -1,5 +1,5 @@
 {
-    "name": "utopigs/seo",
+    "name": "utopigs/seo-plugin",
     "type": "october-plugin",
     "description": "SEO & Sitemap plugin for multi-lingual October CMS sites",
     "keywords": ["october", "octobercms", "seo", "sitemap", "translate"],
