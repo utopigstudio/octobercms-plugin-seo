@@ -50,6 +50,7 @@ class SitemapItems extends FormWidgetBase
     {
         $sitemapItem = new SitemapItem;
 
+        $this->vars['name'] = $this->getFieldName();
         $this->vars['itemProperties'] = json_encode($sitemapItem->fillable);
         $this->vars['items'] = $this->model->items;
 
@@ -95,6 +96,8 @@ class SitemapItems extends FormWidgetBase
      */
     protected function getReferenceDescription($item)
     {
+        if (!$item->type) return;
+
         if ($this->typeListCache === false) {
             $this->typeListCache = $item->getTypeOptions();
         }

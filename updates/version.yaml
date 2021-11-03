@@ -1,26 +1,16 @@
-1.0.1:
+v1.0.1:
     - First version of Utopigs Seo plugin
     - create_data_table.php
-1.0.2:
-    - Fix bug with elements with nested items
-1.1.0:
-    - Add sitemap functionality
-    - Fix some bugs with nested items
+v1.0.2: Fix bug with elements with nested items
+v1.1.0:
+    - Add sitemap functionality. Fix some bugs with nested items.
     - create_sitemaps_table.php
-1.1.1:
-    - Fix browser render issue
-1.1.2:
-    - Undo last change to fix Google Search Console sitemap fetch issues
-1.1.3:
-    - Add a sitemap-debug.xml that renders ok (using https protocol for the namespace attributes) to be able to debug sitemap issues visually
-1.1.4:
-    - Fix bug model image not showing
-1.1.5:
-    - Fix bug with nested categories
-1.1.6:
-    - Try to retrieve image from defaults if not specified
-    - Autofill properties for blog post and category pages
-1.1.7:
-    - Add translations for catalan
-1.1.8:
-    - Added Russian localization
+v1.1.1: Fix browser render issue
+v1.1.2: Undo last change to fix Google Search Console sitemap fetch issues
+v1.1.3: Add a sitemap-debug.xml that renders ok (using https protocol for the namespace attributes) to be able to debug sitemap issues visually
+v1.1.4: Fix bug model image not showing
+v1.1.5: Fix bug with nested categories
+v1.1.6: Try to retrieve image from defaults if not specified. Autofill properties for blog post and category pages
+v1.1.7: Add translations for catalan
+v1.1.8: Added Russian localization
+v1.1.9: Fixes saving in October CMS v2
