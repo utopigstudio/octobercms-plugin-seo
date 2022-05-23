@@ -13,4 +13,5 @@ v1.1.5: Fix bug with nested categories
 v1.1.6: Try to retrieve image from defaults if not specified. Autofill properties for blog post and category pages
 v1.1.7: Add translations for catalan
 v1.1.8: Added Russian localization
-v1.1.9: Fixes saving in October CMS v2
+v1.1.9: Fixes saving sitemap in October CMS v2
+v1.1.10: Fix redirect on create and update SEO data

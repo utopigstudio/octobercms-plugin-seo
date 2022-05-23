@@ -10,6 +10,7 @@ use System\Classes\SettingsManager;
 use League\Csv\Reader as CsvReader;
 use ApplicationException;
 use October\Rain\Filesystem\Zip;
+use Redirect;
 
 class Seo extends \Backend\Classes\Controller {
 
@@ -36,25 +37,36 @@ class Seo extends \Backend\Classes\Controller {
 	    parent::__construct();
         BackendMenu::setContext('Utopigs.Seo', 'seo', 'seo');
 
-        $this->backUrl = Backend::url('utopigs/seo/seo');
-
-        $params = app()->request->all();
-        if (!empty($params['back'])) {
-            $this->backUrl = $params['back'];
-        }
-
-        $config = ($this->getConfig());
-        $config->defaultRedirect = $this->backUrl;
-        $config->update['redirectClose'] = $this->backUrl;
-        $config->create['redirectClose'] = $this->backUrl;
-        $this->setConfig($config);
-
         //custom import form widget that allows zip files
         if ($this->importUploadFormWidgetCustom = $this->makeImportUploadFormWidget()) {
             $this->importUploadFormWidgetCustom->bindToController();
         }
 
 	}
+
+    public function update_onSave($context = null)
+    {
+        $return = parent::update_onSave($context);
+
+        $params = app()->request->all();
+        if (!empty($params['back'])) {
+            return Redirect::to($params['back']);
+        }
+
+        return $return;
+    }
+
+    public function create_onSave($context = null)
+    {
+        $return = parent::create_onSave($context);
+
+        $params = app()->request->all();
+        if (!empty($params['back'])) {
+            return Redirect::to($params['back']);
+        }
+
+        return $return;
+    }
 
     //override import method to allow zip files
     public function import()
