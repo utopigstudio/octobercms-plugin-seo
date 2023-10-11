@@ -10,7 +10,7 @@ class SeoImport extends ImportModel
 
     public function importData($results, $sessionKey = null)
     {
-        $defaultLocale = \RainLab\Translate\Models\Locale::getDefault()->code;
+        $defaultLocale = \RainLab\Translate\Classes\Locale::getDefault()->code;
         //load path from session to be able to load images if they exist
         $path = pathinfo(Session::get('importCsvPath'), PATHINFO_DIRNAME);
 

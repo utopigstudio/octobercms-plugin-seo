@@ -87,8 +87,8 @@ class Sitemap extends Model
         $alternateLocales = [];
 
         $translator = \RainLab\Translate\Classes\Translator::instance();
-        $defaultLocale = \RainLab\Translate\Models\Locale::getDefault()->code;
-        $alternateLocales = array_keys(\RainLab\Translate\Models\Locale::listEnabled());
+        $defaultLocale = \RainLab\Translate\Classes\Locale::getDefault()->code;
+        $alternateLocales = array_keys(\RainLab\Translate\Classes\Locale::listEnabled());
         $translator->setLocale($defaultLocale, false);
 
         /*
@@ -390,10 +390,10 @@ class Sitemap extends Model
     {
         $result = [];
 
-        $defaultLocale = \RainLab\Translate\Models\Locale::getDefault()->code;
+        $defaultLocale = \RainLab\Translate\Classes\Locale::getDefault()->code;
         $pageUrl = self::getPageLocaleUrl($page, $menuItem, $defaultLocale, [$paramName => 'slug']);
 
-        $alternateLocales = array_keys(\RainLab\Translate\Models\Locale::listEnabled());
+        $alternateLocales = array_keys(\RainLab\Translate\Classes\Locale::listEnabled());
 
         if (count($alternateLocales) > 1) {
             foreach ($alternateLocales as $locale) {
@@ -450,10 +450,10 @@ class Sitemap extends Model
     protected static function getStaticPageMenuItem($page)
     {
         $translator = \RainLab\Translate\Classes\Translator::instance();
-        $defaultLocale = \RainLab\Translate\Models\Locale::getDefault()->code;
+        $defaultLocale = \RainLab\Translate\Classes\Locale::getDefault()->code;
         $page->rewriteTranslatablePageUrl($defaultLocale);
         $pageUrl = Url::to($translator->getPathInLocale(array_get($page->attributes, 'viewBag.url'), $defaultLocale));
-        $alternateLocales = array_keys(\RainLab\Translate\Models\Locale::listEnabled());
+        $alternateLocales = array_keys(\RainLab\Translate\Classes\Locale::listEnabled());
         if (count($alternateLocales) > 1) {
             foreach ($alternateLocales as $locale) {
                 $page->rewriteTranslatablePageUrl($locale);
