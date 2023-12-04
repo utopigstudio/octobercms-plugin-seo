@@ -8,7 +8,12 @@ class SeoExport extends ExportModel
     {
         $seo = \Utopigs\Seo\Models\Seo::all();
         $exportdata = [];
-        $alternateLocales = array_keys(\RainLab\Translate\Classes\Locale::listEnabled());
+        // october 2
+        if (class_exists('\RainLab\Translate\Models\Locale')){
+            $alternateLocales = array_keys(\RainLab\Translate\Classes\Locale::listEnabled());
+        } else { // october 3
+            $alternateLocales = \RainLab\Translate\Classes\Locale::listEnabled();
+        }
 
         foreach ($alternateLocales as $locale) {
             $seo->each(function($page) use ($columns, $locale, &$exportdata) {

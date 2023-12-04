@@ -28,7 +28,16 @@ class SeoTab extends FormWidgetBase
 
     private function prepareVars()
     {
-        $this->vars['alternateLocales'] = $alternateLocales = array_keys(\RainLab\Translate\Classes\Locale::listEnabled());
+        // october 2
+        if (class_exists('\RainLab\Translate\Models\Locale')){
+            $defaultLocale = \RainLab\Translate\Models\Locale::getDefault()->code;
+            $alternateLocales = array_keys(\RainLab\Translate\Classes\Locale::listEnabled());
+        } else { // october 3
+            $defaultLocale = \RainLab\Translate\Classes\Locale::getDefault()->code;
+            $alternateLocales = \RainLab\Translate\Classes\Locale::listEnabled();
+        }
+
+        $this->vars['alternateLocales'] = $alternateLocales;
 
         $seo = \Utopigs\Seo\Models\Seo::where('type', $this->pageType)
             ->where('reference', $this->model->getKey())->first();
