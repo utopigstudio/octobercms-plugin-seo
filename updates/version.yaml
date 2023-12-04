@@ -15,3 +15,4 @@ v1.1.7: Add translations for catalan
 v1.1.8: Added Russian localization
 v1.1.9: Fixes saving sitemap in October CMS v2
 v1.1.10: Fix redirect on create and update SEO data
+v1.1.11: Compatibility with October CMS v3
