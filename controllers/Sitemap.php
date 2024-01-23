@@ -32,8 +32,9 @@ class Sitemap extends Controller
 
         BackendMenu::setContext('Utopigs.Seo', 'seo', 'sitemap');
 
-        $this->addJs('/modules/backend/assets/js/october.treeview.js', 'core');
+        $this->addJs('/plugins/utopigs/seo/assets/js/october.treeview.js', 'core');
         $this->addJs('/plugins/utopigs/seo/assets/js/sitemap-definitions.js');
+        $this->addCss('/plugins/utopigs/seo/assets/css/treeview.css', 'RainLab.Pages');
     }
 
     /**
