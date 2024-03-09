@@ -10,7 +10,7 @@ class SeoExport extends ExportModel
         $exportdata = [];
         // october 2
         if (class_exists('\RainLab\Translate\Models\Locale')){
-            $alternateLocales = array_keys(\RainLab\Translate\Classes\Locale::listEnabled());
+            $alternateLocales = array_keys(\RainLab\Translate\Models\Locale::listEnabled());
         } else { // october 3
             $alternateLocales = \RainLab\Translate\Classes\Locale::listEnabled();
         }
