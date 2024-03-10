@@ -49,7 +49,8 @@ class SeoImport extends ImportModel
                 $seo->save();
 
                 if ($image) {
-                    $seo->image()->create(['data' => $path . '/' . $image]);
+                    $seo->image = (new \System\Models\File)->fromFile($path . '/' . $image);
+                    $seo->save();
                 }
 
                 if ($seo->wasRecentlyCreated) {

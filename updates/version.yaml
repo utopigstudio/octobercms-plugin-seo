@@ -18,3 +18,4 @@ v1.1.10: Fix redirect on create and update SEO data
 v1.1.11: Compatibility with October CMS v3
 v1.1.12: Fix sitemaps in October CMS v3
 v1.1.13: Fix bugs in October CMS v2
+v1.1.14: Fixes in demo data import for October CMS 3.6
