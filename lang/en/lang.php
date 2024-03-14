@@ -31,6 +31,11 @@ return [
             'description' => 'Page property that contains your model data',
         ],
     ],
+    'settings' => [
+        'description' => 'SEO settings',
+        'use_prepend_append_also_in_pages_with_seo' => 'Add prefix and suffix to pages with SEO',
+        'use_prepend_append_also_in_pages_with_seo_comment' => 'If this option is disabled and the component has "prepend" or "append" properties, they will only be added if the page does not have SEO specifically entered.',
+    ],
     'seo' => [
         'menu' => 'SEO',
         'update_title' => 'Update SEO',

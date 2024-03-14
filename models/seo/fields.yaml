@@ -21,7 +21,7 @@ fields:
         label: utopigs.seo::lang.seo.description
         span: left
         attributes:
-            maxlength: 155
+            maxlength: 160
     keywords:
         label: utopigs.seo::lang.seo.keywords
         span: left

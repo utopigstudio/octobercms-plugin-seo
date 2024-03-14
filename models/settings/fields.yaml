@@ -1,0 +1,6 @@
+fields: 
+  prepend_append_in_pages_with_seo: 
+    label: utopigs.seo::lang.settings.use_prepend_append_also_in_pages_with_seo
+    comment: utopigs.seo::lang.settings.use_prepend_append_also_in_pages_with_seo_comment
+    type: switch
+    default: 1

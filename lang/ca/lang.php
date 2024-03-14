@@ -31,6 +31,11 @@ return [
             'description' => 'Propietat de la pàgina que conté les dades del model',
         ],
     ],
+    'settings' => [
+        'description' => 'Configuració del SEO',
+        'use_prepend_append_also_in_pages_with_seo' => 'Afegir prefix i sufix a les pàgines amb SEO',
+        'use_prepend_append_also_in_pages_with_seo_comment' => 'Si es desactiva aquesta opció i el component té les propietats "prefixar" o "anexar", només s’afegiran si la pàgina no té SEO introduït específicament.',
+    ],
     'seo' => [
         'menu' => 'SEO',
         'update_title' => 'Actualizar SEO',

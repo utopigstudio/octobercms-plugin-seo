@@ -31,6 +31,11 @@ return [
             'description' => 'Параметр URL который содержит ссылку на данные вашей модели. (Пример: :slug)',
         ],
     ],
+    'settings' => [
+        'description' => 'Настройки SEO',
+        'use_prepend_append_also_in_pages_with_seo' => 'Добавить префикс и постфикс к страницам с SEO',
+        'use_prepend_append_also_in_pages_with_seo_comment' => 'Если эта опция отключена и компонент имеет свойства "префикс" или "постфикс", они будут добавлены только если страница не имеет SEO.',
+    ],
     'seo' => [
         'menu' => 'SEO',
         'update_title' => 'Обновить SEO для страницы',

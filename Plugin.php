@@ -85,4 +85,17 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function registerSettings()
+    {
+        return [
+            'settings' => [
+                'label'       => 'utopigs.seo::lang.plugin.name',
+                'icon'        => 'icon-envelope',
+                'description' => 'utopigs.seo::lang.settings.description',
+                'class'       => 'Utopigs\Seo\Models\Settings',
+                'order'       => 600,
+                'permissions' => ['utopigs.seo.manage']
+            ]
+        ];
+    }
 }

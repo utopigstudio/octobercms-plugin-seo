@@ -2,6 +2,7 @@
 
 use Cms\Classes\ComponentBase;
 use Event;
+use Utopigs\Seo\Models\Settings;
 
 class SeoModel extends ComponentBase
 {
@@ -60,6 +61,15 @@ class SeoModel extends ComponentBase
 
         $seo_defaults = NULL;
 
+        //retrieve prepend and append properties from layout Seo component
+        if ($this->page->meta_title_prepend) {
+            $prepend = $this->page->meta_title_prepend;
+        }
+        
+        if ($this->page->meta_title_append) {
+            $append = $this->page->meta_title_append;
+        }
+
         $seo = \Utopigs\Seo\Models\Seo::where('type', $this->property('pageType'))
             ->where('reference', $this->page[$this->property('pageProperty')]->getKey())->first();
 
@@ -70,7 +80,7 @@ class SeoModel extends ComponentBase
             if ($seo_default_values) {
                 $seo_defaults = new \Utopigs\Seo\Models\Seo;
                 if (isset($seo_default_values['title'])) {
-                    $seo_defaults->title = $seo_default_values['title'];
+                    $seo_defaults->title = ($prepend ? ($prepend . ' ') : '') . $seo_default_values['title'] . ($append ? (' ' . $append) : '');
                 }
                 if (isset($seo_default_values['description'])) {
                     $seo_defaults->description = $seo_default_values['description'];
@@ -98,16 +108,11 @@ class SeoModel extends ComponentBase
             return;
         }
 
-        //retrieve prepend and append properties from layout Seo component
-        if ($this->page->meta_title_prepend) {
-            $prepend = $this->page->meta_title_prepend;
-        }
-        if ($this->page->meta_title_append) {
-            $append = $this->page->meta_title_append;
-        }
-
         $this->page->hasSeo = true;
-        $this->page->meta_title = $this->page->title = ($prepend ? ($prepend . ' ') : '') . $seo->title . ($append ? (' ' . $append) : '');
+        if (Settings::get('prepend_append_in_pages_with_seo', 1)) {
+            $seo->title = ($prepend ? ($prepend . ' ') : '') . $seo->title . ($append ? (' ' . $append) : '');
+        }
+        $this->page->meta_title = $this->page->title = $seo->title;
         $this->page->meta_description = $this->page->description = $seo->description;
         if ($seo->keywords) {
             $this->page->meta_keywords = $this->page->keywords = $seo->keywords;

@@ -153,7 +153,7 @@ public static function mapSeoData($reference)
 
     $seo_data = [
         'title' => $item->title,
-        'description' => str_limit(strip_tags($item->description), 155),
+        'description' => str_limit(strip_tags($item->description), 160),
         'image' => $item->image,
     ];
 

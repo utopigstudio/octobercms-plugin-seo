@@ -31,6 +31,11 @@ return [
             'description' => 'Propiedad de la página que contiene los datos del modelo',
         ],
     ],
+    'settings' => [
+        'description' => 'Configuración del SEO',
+        'use_prepend_append_also_in_pages_with_seo' => 'Añadir prefijo y sufijo a las páginas con SEO',
+        'use_prepend_append_also_in_pages_with_seo_comment' => 'Si se desactiva esta opción y el componente tiene las propiedades "prefijar" o "anexar", solo se añadirán si la página no tiene SEO introducido específicamente.',
+    ],
     'seo' => [
         'menu' => 'SEO',
         'update_title' => 'Actualizar SEO',
