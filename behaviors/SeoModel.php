@@ -30,7 +30,7 @@ class SeoModel extends ModelBehavior
 
     protected function setProperties($model)
     {
-        if (!isset($model->seoPageType)) {
+        if (!isset($model->seoPageType) && !method_exists($model, 'getSeoPageType')) {
             throw new ApplicationException(trans('utopigs.seo::lang.seotab.missing_property', ['model' => class_basename($model)]));
         }
 
@@ -46,6 +46,10 @@ class SeoModel extends ModelBehavior
         Event::listen('backend.form.extendFields', function ($widget) {
             if (isset($widget->model) && get_class($widget->model) == $this->modelClass && !$widget->isNested) {
                 $seoFields = Yaml::parseFile(plugins_path('utopigs/seo/models/seo/tab.yaml'));
+
+                if (method_exists($widget->model, 'getSeoPageType')) {
+                    $this->seoPageType = $widget->model->getSeoPageType();
+                }
 
                 $seoFields['utopigs_seotab@update']['pageType'] = $this->seoPageType;
 
