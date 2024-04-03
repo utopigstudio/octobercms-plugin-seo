@@ -21,3 +21,4 @@ v1.1.13: Fix bugs in October CMS v2
 v1.1.14: Fixes in demo data import for October CMS 3.6
 v1.1.15: Allow to remove the append or prepend text in the title of pages with SEO data
 v1.1.16: getSeoPageType method to override fixed property dynamically
+v1.1.17: Fix for external images (urls)
