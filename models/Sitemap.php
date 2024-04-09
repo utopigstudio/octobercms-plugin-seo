@@ -142,25 +142,32 @@ class Sitemap extends Model
                         $alternateLocaleUrls = [];
 
                         if ($item->type == 'cms-page') {
-                            $page = Page::loadCached($theme, $item->reference);
-                            $router = new RainRouter;
+                            $url = $itemInfo['url'];
+                            if (isset($itemInfo['sites'])) { // October 3
+                                foreach ($itemInfo['sites'] as $site) {
+                                    $alternateLocaleUrls[$site['locale']] = $site['url'];
+                                }
+                            } else { // October 2
+                                $page = Page::loadCached($theme, $item->reference);
+                                $router = new RainRouter;
 
-                            if ($page->hasTranslatablePageUrl($defaultLocale)) {
-                                $page->rewriteTranslatablePageUrl($defaultLocale);
-                            }
+                                if ($page->hasTranslatablePageUrl($defaultLocale)) {
+                                    $page->rewriteTranslatablePageUrl($defaultLocale);
+                                }
 
-                            $url = $translator->getPathInLocale($page->url, $defaultLocale);
-                            $url = $router->urlFromPattern($url);
-                            $url = Url::to($url);
+                                $url = $translator->getPathInLocale($page->url, $defaultLocale);
+                                $url = $router->urlFromPattern($url);
+                                $url = Url::to($url);
 
-                            if (count($alternateLocales) > 1) {
-                                foreach ($alternateLocales as $locale) {
-                                    if ($page->hasTranslatablePageUrl($locale)) {
-                                        $page->rewriteTranslatablePageUrl($locale);
+                                if (count($alternateLocales) > 1) {
+                                    foreach ($alternateLocales as $locale) {
+                                        if ($page->hasTranslatablePageUrl($locale)) {
+                                            $page->rewriteTranslatablePageUrl($locale);
+                                        }
+                                        $altUrl = $translator->getPathInLocale($page->url, $locale);
+                                        $altUrl = $router->urlFromPattern($altUrl);
+                                        $alternateLocaleUrls[$locale] = Url::to($altUrl);
                                     }
-                                    $altUrl = $translator->getPathInLocale($page->url, $locale);
-                                    $altUrl = $router->urlFromPattern($altUrl);
-                                    $alternateLocaleUrls[$locale] = Url::to($altUrl);
                                 }
                             }
                         }

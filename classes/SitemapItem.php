@@ -55,6 +55,8 @@ class SitemapItem
      */
     public $exists = false;
 
+    public $sites = true;
+
     /**
      * @var array Fillable fields
      */
