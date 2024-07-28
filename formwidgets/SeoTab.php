@@ -34,7 +34,7 @@ class SeoTab extends FormWidgetBase
             $alternateLocales = array_keys(\RainLab\Translate\Models\Locale::listEnabled());
         } else { // october 3
             $defaultLocale = \RainLab\Translate\Classes\Locale::getDefault()->code;
-            $alternateLocales = \RainLab\Translate\Classes\Locale::listEnabled();
+            $alternateLocales = array_keys(\RainLab\Translate\Classes\Locale::listEnabled());
         }
 
         $this->vars['alternateLocales'] = $alternateLocales;
