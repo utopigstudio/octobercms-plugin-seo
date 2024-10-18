@@ -74,7 +74,7 @@ class SitemapItems extends FormWidgetBase
      */
     protected function loadAssets()
     {
-        $this->addJs('js/sitemap-items-editor.js', 'core');
+        $this->addJs('js/sitemap-items-editor.js?v=1.1.20', 'core');
     }
 
     /**

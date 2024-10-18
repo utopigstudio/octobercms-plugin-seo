@@ -24,3 +24,4 @@ v1.1.16: getSeoPageType method to override fixed property dynamically
 v1.1.17: Fix for external images (urls)
 v1.1.18: Fix sitemap generation for october 3
 v1.1.19: Fix bug with translations in october 3
+v1.1.20: Compatibility fixes for October v3.7
