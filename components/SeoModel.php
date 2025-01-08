@@ -73,33 +73,33 @@ class SeoModel extends ComponentBase
         $seo = \Utopigs\Seo\Models\Seo::where('type', $this->property('pageType'))
             ->where('reference', $this->page[$this->property('pageProperty')]->getKey())->first();
 
-        //if there's no manually entered SEO data, or some values are missing, try to retrieve defaults from model
+        if ($seo) {
+            $this->page->hasSeo = true;
+        }
+
+        //if there's no manually entered SEO data, or image is missing, try to retrieve defaults from model
         if (!$seo || empty($seo->image)) {
             $seo_default_values = Event::fire('utopigs.seo.mapSeoData', [$this->property('pageType'), $this->page[$this->property('pageProperty')]->getKey()], true);
 
             if ($seo_default_values) {
-                $seo_defaults = new \Utopigs\Seo\Models\Seo;
-                if (isset($seo_default_values['title'])) {
-                    $seo_defaults->title = ($prepend ? ($prepend . ' ') : '') . $seo_default_values['title'] . ($append ? (' ' . $append) : '');
-                }
-                if (isset($seo_default_values['description'])) {
-                    $seo_defaults->description = $seo_default_values['description'];
-                }
-                if (isset($seo_default_values['keywords'])) {
-                    $seo_defaults->keywords = $seo_default_values['keywords'];
-                }
-                if (isset($seo_default_values['image'])) {
-                    $seo_defaults->image = $seo_default_values['image'];
-                }
-
                 if (!$seo) {
-                    $seo = $seo_defaults;
+                    $seo = new \Utopigs\Seo\Models\Seo;
+                    if (isset($seo_default_values['title'])) {
+                        $seo->title = ($prepend ? ($prepend . ' ') : '') . $seo_default_values['title'] . ($append ? (' ' . $append) : '');
+                    }
+                    if (isset($seo_default_values['description'])) {
+                        $seo->description = $seo_default_values['description'];
+                    }
+                    if (isset($seo_default_values['keywords'])) {
+                        $seo->keywords = $seo_default_values['keywords'];
+                    }
+                    if (isset($seo_default_values['image'])) {
+                        $seo->image = $seo_default_values['image'];
+                    }
                 }
                 //if there is seo data but image is no filled, try to fill from defaults
-                else {
-                    if (empty($seo->image) && !empty($seo_defaults->image)) {
-                        $seo->image = $seo_defaults->image;
-                    }
+                elseif (empty($seo->image) && isset($seo_default_values['image'])) {
+                    $seo->image = $seo_default_values['image'];
                 }
             }
         }
@@ -108,10 +108,10 @@ class SeoModel extends ComponentBase
             return;
         }
 
-        $this->page->hasSeo = true;
-        if (Settings::get('prepend_append_in_pages_with_seo', 1)) {
+        if ($this->page->hasSeo && Settings::get('prepend_append_in_pages_with_seo', 1)) {
             $seo->title = ($prepend ? ($prepend . ' ') : '') . $seo->title . ($append ? (' ' . $append) : '');
         }
+
         $this->page->meta_title = $this->page->title = $seo->title;
         $this->page->meta_description = $this->page->description = $seo->description;
         if ($seo->keywords) {
