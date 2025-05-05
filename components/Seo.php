@@ -8,12 +8,12 @@ use Utopigs\Seo\Models\Settings;
 class Seo extends ComponentBase
 {
     public function componentDetails()
-	{
-		return [
-			'name'			=> 'utopigs.seo::lang.component_seo.name',
-			'description'	=> 'utopigs.seo::lang.component_seo.description'
-		];
-	}
+    {
+        return [
+            'name' => 'utopigs.seo::lang.component_seo.name',
+            'description' => 'utopigs.seo::lang.component_seo.description'
+        ];
+    }
 
     public function defineProperties()
     {

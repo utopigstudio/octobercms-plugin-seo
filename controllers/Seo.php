@@ -32,9 +32,9 @@ class Seo extends \Backend\Classes\Controller {
 
     protected $backUrl = '';
 
-	public function __construct()
-	{
-	    parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
         BackendMenu::setContext('Utopigs.Seo', 'seo', 'seo');
 
         //custom import form widget that allows zip files
@@ -42,7 +42,7 @@ class Seo extends \Backend\Classes\Controller {
             $this->importUploadFormWidgetCustom->bindToController();
         }
 
-	}
+    }
 
     public function update_onSave($context = null)
     {

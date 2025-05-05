@@ -51,8 +51,8 @@ class Seo extends Model
     ];
 
     public $translatable = [
-    	'title',
-    	'description',
+        'title',
+        'description',
         'keywords'
     ];
 

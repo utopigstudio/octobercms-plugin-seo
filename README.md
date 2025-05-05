@@ -101,7 +101,7 @@ public static function getMenuTypeInfo($type)
             $references[$post->id] = $post->title;
         }
         $result = [
-            'references'   => $references
+            'references' => $references
         ];
     }
 

@@ -7,12 +7,12 @@ use Utopigs\Seo\Models\Settings;
 class SeoModel extends ComponentBase
 {
     public function componentDetails()
-	{
-		return [
-			'name'			=> 'utopigs.seo::lang.component_seomodel.name',
-			'description'	=> 'utopigs.seo::lang.component_seomodel.description'
-		];
-	}
+    {
+        return [
+            'name' => 'utopigs.seo::lang.component_seomodel.name',
+            'description' => 'utopigs.seo::lang.component_seomodel.description'
+        ];
+    }
 
     public function defineProperties()
     {

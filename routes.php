@@ -10,11 +10,11 @@ Route::get('sitemap.xml', function()
     $themeActive = Theme::getActiveTheme()->getDirName();
 
     try {
-    	$definition = Sitemap::where('theme', $themeActive)->firstOrFail();
+        $definition = Sitemap::where('theme', $themeActive)->firstOrFail();
     } catch (ModelNotFound $e) {
-    	Log::info(trans('utopigs.seo::lang.sitemap.not_found'));
+        Log::info(trans('utopigs.seo::lang.sitemap.not_found'));
 
-    	return App::make(Controller::class)->setStatusCode(404)->run('/404');
+        return App::make(Controller::class)->setStatusCode(404)->run('/404');
     }
 
     return Response::make($definition->generateSitemap())
@@ -26,11 +26,11 @@ Route::get('sitemap-debug.xml', function()
     $themeActive = Theme::getActiveTheme()->getDirName();
 
     try {
-    	$definition = Sitemap::where('theme', $themeActive)->firstOrFail();
+        $definition = Sitemap::where('theme', $themeActive)->firstOrFail();
     } catch (ModelNotFound $e) {
-    	Log::info(trans('utopigs.seo::lang.sitemap.not_found'));
+        Log::info(trans('utopigs.seo::lang.sitemap.not_found'));
 
-    	return App::make(Controller::class)->setStatusCode(404)->run('/404');
+        return App::make(Controller::class)->setStatusCode(404)->run('/404');
     }
 
     return Response::make($definition->generateSitemap('https'))
