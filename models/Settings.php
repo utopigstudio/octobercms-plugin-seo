@@ -13,5 +13,6 @@ class Settings extends Model
     public function initSettingsData()
     {
         $this->prepend_append_in_pages_with_seo = 1;
+        $this->events_type_to_launch = 'pages.menuitem';
     }
 }

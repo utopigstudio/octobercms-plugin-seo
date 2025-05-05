@@ -75,6 +75,8 @@ class Sitemap extends Model
 
     public function generateSitemap($protocol = 'http')
     {
+        $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
+
         if (!$this->items) {
             return;
         }
@@ -122,7 +124,7 @@ class Sitemap extends Model
                     $apiResult = self::staticPageResolveMenuItem($item, $theme);
                 }
                 else {
-                    $apiResult = Event::fire('pages.menuitem.resolveItem', [$item->type, $item, $currentUrl, $theme]);
+                    $apiResult = Event::fire($eventType.'.resolveItem', [$item->type, $item, $currentUrl, $theme]);
                 }
 
                 if (!is_array($apiResult)) {

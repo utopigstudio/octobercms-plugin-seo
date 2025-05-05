@@ -3,6 +3,7 @@
 use Model;
 use Event;
 use Illuminate\Database\Eloquent\Collection;
+use Utopigs\Seo\Models\Settings;
 
 /**
  * Item Model
@@ -104,8 +105,10 @@ class SitemapItem
      */
     public function getTypeOptions()
     {
+        $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
+
         $result = ['url' => 'URL'];
-        $apiResult = Event::fire('pages.menuitem.listTypes');
+        $apiResult = Event::fire($eventType.'.listTypes');
 
         if (is_array($apiResult)) {
             foreach ($apiResult as $typeList) {
@@ -134,8 +137,10 @@ class SitemapItem
 
     public static function getTypeInfo($type)
     {
+        $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
+
         $result = [];
-        $apiResult = Event::fire('pages.menuitem.getTypeInfo', [$type]);
+        $apiResult = Event::fire($eventType.'.getTypeInfo', [$type]);
 
         if (is_array($apiResult)) {
             foreach ($apiResult as $typeInfo) {

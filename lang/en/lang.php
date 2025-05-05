@@ -35,6 +35,10 @@ return [
         'description' => 'SEO settings',
         'use_prepend_append_also_in_pages_with_seo' => 'Add prefix and suffix to pages with SEO',
         'use_prepend_append_also_in_pages_with_seo_comment' => 'If this option is disabled and the component has "prepend" or "append" properties, they will only be added if the page does not have SEO specifically entered.',
+        'events_type_to_launch' => 'Events type to launch',
+        'events_type_to_launch_comment' => 'Compatibility setting while migrating from pages.menuitem.* to cms.pageLookup.* events. Change this to "cms.pageLookup.*" if all your plugins are listening to <a target="_blank" href="https://docs.octobercms.com/3.x/element/form/widget-pagefinder.html#creating-new-page-types">cms events</a>',
+        'events_type_to_launch_pages' => 'pages.menuitem.*',
+        'events_type_to_launch_cms' => 'cms.pageLookup.*',
     ],
     'seo' => [
         'menu' => 'SEO',

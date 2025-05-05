@@ -4,3 +4,12 @@ fields:
     comment: utopigs.seo::lang.settings.use_prepend_append_also_in_pages_with_seo_comment
     type: switch
     default: 1
+  events_type_to_launch:
+    label: utopigs.seo::lang.settings.events_type_to_launch
+    comment: utopigs.seo::lang.settings.events_type_to_launch_comment
+    commentHtml: true
+    type: dropdown
+    options:
+      pages.menuitem: utopigs.seo::lang.settings.events_type_to_launch_pages
+      cms.pageLookup: utopigs.seo::lang.settings.events_type_to_launch_cms
+    default: pages

@@ -62,6 +62,8 @@ class Seo extends Model
 
     public function getTypeOptions()
     {
+        $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
+
         $filterValue = NULL;
         if (!$this->exists) {
             $params = app()->request->all();
@@ -72,7 +74,7 @@ class Seo extends Model
         }
 
         $result = [];
-        $apiResult = Event::fire('pages.menuitem.listTypes');
+        $apiResult = Event::fire($eventType.'.listTypes');
 
         if (is_array($apiResult)) {
             foreach ($apiResult as $typeList) {
@@ -81,7 +83,7 @@ class Seo extends Model
                 }
 
                 foreach ($typeList as $typeCode => $typeName) {
-                    $apiResult2 = Event::fire('pages.menuitem.getTypeInfo', [$typeCode]);
+                    $apiResult2 = Event::fire($eventType.'.getTypeInfo', [$typeCode]);
                     if (is_array($apiResult2)) {
                         foreach ($apiResult2 as $typeInfo) {
                             if (isset($typeInfo['references'])) {
@@ -103,6 +105,8 @@ class Seo extends Model
 
     public function getReferenceOptions()
     {
+        $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
+
         $type = $this->type ? $this->type : 'cms-page';
 
         $filterValue = NULL;
@@ -117,7 +121,7 @@ class Seo extends Model
             }
         }
 
-        $apiResult = Event::fire('pages.menuitem.getTypeInfo', [$type]);
+        $apiResult = Event::fire($eventType.'.getTypeInfo', [$type]);
 
         $items = [];
 
@@ -181,7 +185,9 @@ class Seo extends Model
 
     public function getModelTitleAttribute()
     {
-        $apiResult = Event::fire('pages.menuitem.getTypeInfo', [$this->type]);
+        $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
+
+        $apiResult = Event::fire($eventType.'.getTypeInfo', [$this->type]);
 
         if (is_array($apiResult)) {
 

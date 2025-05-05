@@ -64,30 +64,30 @@ You will also need to add the SeoModel component to the post or category pages (
 
 You can create SEO Data for your own models.
 
-Your plugin has to listen to the following events that Rainlab.Pages uses to build dynamic menus:
+Your plugin has to listen to the following events that Page Finder Field uses to render a page picker field.
 
-* `pages.menuitem.listType` event handler should return a list of types of objects that can have SEO data attached.
-* `pages.menuitem.getTypeInfo` event handler returns all items for a type of object.
+* `cms.pageLookup.listType` event handler should return a list of types of objects that can have SEO data attached.
+* `cms.pageLookup.getTypeInfo` event handler returns all items for a type of object.
 
-An example of this listeners (this code is simplified for this plugin purposes, more data needs to be returned for Rainlab.Pages menu to work):
+An example of this listeners (this code is simplified for this plugin purposes):
 
 ```php
 public function boot()
 {
-    Event::listen('pages.menuitem.listTypes', function() {
+    Event::listen('cms.pageLookup.listTypes', function() {
         return [
             'acme-post' => 'Post page',
         ];
     });
 
-    Event::listen('pages.menuitem.getTypeInfo', function($type) {
+    Event::listen('cms.pageLookup.getTypeInfo', function($type) {
         if ($type == 'acme-post')
             return YourModel::getMenuTypeInfo($type);
     });
 }
 ```
 
-In YourModel the implementation might look like this (this code is simplified for this plugin purposes, more data needs to be returned for Rainlab.Pages menu to work):
+In YourModel the implementation might look like this (this code is simplified for this plugin purposes):
 
 ```php
 public static function getMenuTypeInfo($type)
@@ -170,7 +170,7 @@ class Post
 {
     public $implement = ['Utopigs.Seo.Behaviors.SeoModel'];
 
-    //required: menu item type that your plugin expects in pages.menuitem.getTypeInfo event
+    //required: menu item type that your plugin expects in cms.pageLookup.getTypeInfo event
     public $seoPageType = 'acme-post';
 
     //optional: where to put the SEO tab, default is 'primary'
@@ -252,7 +252,7 @@ An item of this type expands into multiple items representing all blog existing 
 
 The Sitemap plugin shares the same events for registering item types as the [Pages plugin](http://octobercms.com/plugin/rainlab-pages). See the documentation provided by this plugin for more information.
 
-When resolving an item, via the `pages.menuitem.resolveItem` event handler, each item should return an extra key in the array called `mtime`. This should be a Date object (see `Carbon\Carbon`) or a timestamp value compatible with PHP's `date()` function and represent the last time the link was modified.
+When resolving an item, via the `cms.pageLookup.resolveItem` event handler, each item should return an extra key in the array called `mtime`. This should be a Date object (see `Carbon\Carbon`) or a timestamp value compatible with PHP's `date()` function and represent the last time the link was modified.
 
 Each item should also append all alternate language (including the default language) urls in the array called `alternate_locale_urls`.
 
