@@ -3,9 +3,6 @@
 use Model;
 use Event;
 use Validator;
-use ValidationException;
-use Cms\Classes\Page;
-use Cms\Classes\Theme;
 
 Validator::extend('type_unique', function($attribute, $value, $parameters, $validator) {
     $presenceVerifier = $validator->getPresenceVerifier();
@@ -60,6 +57,8 @@ class Seo extends Model
         'image' => 'System\Models\File'
     ];
 
+    private $firstTypeInDropdown = NULL;
+
     public function getTypeOptions()
     {
         $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
@@ -83,6 +82,9 @@ class Seo extends Model
                 }
 
                 foreach ($typeList as $typeCode => $typeName) {
+                    if (is_null($this->firstTypeInDropdown)) {
+                        $this->firstTypeInDropdown = $typeCode;
+                    }
                     $apiResult2 = Event::fire($eventType.'.getTypeInfo', [$typeCode]);
                     if (is_array($apiResult2)) {
                         foreach ($apiResult2 as $typeInfo) {
@@ -107,7 +109,10 @@ class Seo extends Model
     {
         $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
 
-        $type = $this->type ? $this->type : 'cms-page';
+        $type = $this->type ?? $this->firstTypeInDropdown;
+        if (is_null($type)) {
+            $type = 'cms-page';
+        }
 
         $filterValue = NULL;
         if (!$this->exists) {

@@ -27,3 +27,4 @@ v1.1.19: Fix bug with translations in october 3
 v1.1.20: Compatibility fixes for October v3.7
 v1.1.21: Fix duplicated suffix in pages with mapped seo data from model defaults
 v1.1.22: Update event type to launch, fix sitemap definition view
+v1.1.23: Fix bug when first type in dropdown is not cms-page
