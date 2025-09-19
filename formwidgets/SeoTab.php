@@ -64,6 +64,7 @@ class SeoTab extends FormWidgetBase
         
         if (!$seo_defaults_default_locale) {
             $this->partial = 'seotab_empty';
+            $translator->setLocale($currentLocale, false);
             return;
         }
 
