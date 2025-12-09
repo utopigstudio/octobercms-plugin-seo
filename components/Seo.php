@@ -54,7 +54,15 @@ class Seo extends ComponentBase
         }
 
         if ($seo) {
-            $this->page->hasSeo = true;
+            if ($seo->no_index) {
+                $seo = null;
+                $this->page->noIndex = true;
+            } else {
+                $this->page->hasSeo = true;
+            }
+        }
+
+        if ($seo) {
             if (Settings::get('prepend_append_in_pages_with_seo', 1)) {
                 $seo->title = ($prepend ? ($prepend . ' ') : '') . $seo->title . ($append ? (' ' . $append) : '');
             }

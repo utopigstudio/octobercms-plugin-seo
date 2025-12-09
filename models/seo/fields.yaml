@@ -12,25 +12,49 @@ fields:
         type: dropdown
         span: left
         dependsOn: type
+    no_index:
+        label: utopigs.seo::lang.seo.no_index
+        type: switch
+        span: left
+        comment: utopigs.seo::lang.seo.no_index_comment
+        default: false
     title:
         label: utopigs.seo::lang.seo.title
         span: left
         attributes:
             maxlength: 70
+        trigger:
+            action: hide
+            field: no_index
+            condition: checked
+        required: true
     description:
         label: utopigs.seo::lang.seo.description
         span: left
         attributes:
             maxlength: 160
+        trigger:
+            action: hide
+            field: no_index
+            condition: checked
     keywords:
         label: utopigs.seo::lang.seo.keywords
         span: left
         comment: utopigs.seo::lang.seo.keywords_hint
         attributes:
             maxlength: 255
+        trigger:
+            action: hide
+            field: no_index
+            condition: checked
+            
     image:
         label: utopigs.seo::lang.seo.image
         type: fileupload
         mode: image
         span: left
         imageHeight: 260
+        trigger:
+            action: hide
+            field: no_index
+            condition: checked

@@ -35,7 +35,6 @@ class SeoModel extends ComponentBase
     public function onRun()
     {
         $seo = NULL;
-        $seo_defaults = NULL;
         $prepend = NULL;
         $append = NULL;
 
@@ -59,8 +58,6 @@ class SeoModel extends ComponentBase
             return;
         }
 
-        $seo_defaults = NULL;
-
         //retrieve prepend and append properties from layout Seo component
         if ($this->page->meta_title_prepend) {
             $prepend = $this->page->meta_title_prepend;
@@ -74,7 +71,12 @@ class SeoModel extends ComponentBase
             ->where('reference', $this->page[$this->property('pageProperty')]->getKey())->first();
 
         if ($seo) {
-            $this->page->hasSeo = true;
+            if ($seo->no_index) {
+                $seo = null;
+                $this->page->noIndex = true;
+            } else {
+                $this->page->hasSeo = true;
+            }
         }
 
         //if there's no manually entered SEO data, or image is missing, try to retrieve defaults from model

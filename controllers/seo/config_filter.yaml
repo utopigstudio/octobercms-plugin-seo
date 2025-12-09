@@ -1,0 +1,12 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    no_index:
+        label: utopigs.seo::lang.seo.no_index
+        type: switch
+        default: 0
+        conditions:
+            - no_index <> true
+            - no_index = true

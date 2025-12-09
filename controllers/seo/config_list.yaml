@@ -14,14 +14,12 @@ title: utopigs.seo::lang.component_seo.name
 # Link URL for each record
 recordUrl: utopigs/seo/seo/update/:id
 
-# Message to display if the list is empty
-# noRecordsMessage: backend::lang.list.no_records
 
 # Records to display per page
-# recordsPerPage: 20
+recordsPerPage: 20
 
 # Displays the list column set up button
-# showSetup: true
+showSetup: true
 
 # Displays the sorting link on each column
 showSorting: true
@@ -33,6 +31,8 @@ defaultSort:
 
 # Display checkboxes next to each record
 showCheckboxes: true
+
+filter: config_filter.yaml
 
 # Toolbar widget configuration
 toolbar:

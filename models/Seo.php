@@ -38,13 +38,15 @@ class Seo extends Model
     public $rules = [
         'type' => 'required',
         'reference' => 'required|type_unique',
-        'title' => 'required|max:70',
-        'description' => 'required|max:155',
+        'title' => 'required_unless:no_index,1|max:70',
+        'description' => 'required_unless:no_index,1|max:155',
         'keywords' => 'max:255',
     ];
 
     public $customMessages = [
-        'type_unique' => 'utopigs.seo::validation.type_unique'
+        'type_unique' => 'utopigs.seo::validation.type_unique',
+        'title.required_unless' => 'utopigs.seo::validation.title_required_unless',
+        'description.required_unless' => 'utopigs.seo::validation.description_required_unless',
     ];
 
     public $translatable = [

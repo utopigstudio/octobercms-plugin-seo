@@ -14,3 +14,6 @@ columns:
         label: utopigs.seo::lang.seo.description
     keywords:
         label: utopigs.seo::lang.seo.keywords
+    no_index:
+        label: utopigs.seo::lang.seo.no_index_column
+        type: switch

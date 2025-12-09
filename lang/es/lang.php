@@ -50,6 +50,9 @@ return [
         'import' => 'Importar',
         'export' => 'Exportar',
         'upload_csv_or_zip_file' => 'Cargar un archivo CSV o ZIP',
+        'no_index' => 'No index',
+        'no_index_comment' => 'Activa para indicar a los motores de búsqueda que no indexen esta página.',
+        'no_index_column' => 'No index activado',
     ],
     'seotab' => [
         'title' => 'SEO',
