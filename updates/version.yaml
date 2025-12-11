@@ -32,3 +32,4 @@ v1.1.24: Reset current app locale when SEO data has not been found
 v1.1.25:
     - Add no_index field to SEO data
     - v1.1.25_add_no_index_field.php
+v1.1.26: Fix missing translation
