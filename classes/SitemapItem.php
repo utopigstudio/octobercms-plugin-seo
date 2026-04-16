@@ -117,7 +117,7 @@ class SitemapItem
                 }
 
                 foreach ($typeList as $typeCode => $typeName) {
-                    $result[$typeCode] = $typeName;
+                    $result[$typeCode] = is_array($typeName) ? $typeName[0] : $typeName;
                 }
             }
         }
