@@ -33,3 +33,4 @@ v1.1.25:
     - Add no_index field to SEO data
     - v1.1.25_add_no_index_field.php
 v1.1.26: Fix missing translation
+v1.1.27: Add canonical_url to page metas

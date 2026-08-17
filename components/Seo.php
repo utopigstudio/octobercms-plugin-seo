@@ -3,6 +3,7 @@
 use Cms\Classes\ComponentBase;
 use Cms\Classes\Theme;
 use File;
+use Illuminate\Support\Facades\URL;
 use Utopigs\Seo\Models\Settings;
 
 class Seo extends ComponentBase
@@ -79,6 +80,8 @@ class Seo extends ComponentBase
             }
         }
 
+        $this->page->canonical_url = URL::current();
+
         // load critical css for this page if it exists
         $this->page->critical_styles = '';
         $theme = Theme::getActiveTheme();
@@ -87,5 +90,4 @@ class Seo extends ComponentBase
             $this->page->critical_styles = File::get($critical_styles_path);
         }
     }
-
 }
