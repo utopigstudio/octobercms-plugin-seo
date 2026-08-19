@@ -38,9 +38,8 @@ class Seo extends Model
     public $rules = [
         'type' => 'required',
         'reference' => 'required|type_unique',
-        'title' => 'required_unless:no_index,1|max:70',
-        'description' => 'required_unless:no_index,1|max:155',
-        'keywords' => 'max:255',
+        'title' => 'required_unless:no_index,1',
+        'description' => 'required_unless:no_index,1',
     ];
 
     public $customMessages = [

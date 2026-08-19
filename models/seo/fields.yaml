@@ -21,8 +21,6 @@ fields:
     title:
         label: utopigs.seo::lang.seo.title
         span: left
-        attributes:
-            maxlength: 70
         trigger:
             action: hide
             field: no_index
@@ -31,8 +29,8 @@ fields:
     description:
         label: utopigs.seo::lang.seo.description
         span: left
-        attributes:
-            maxlength: 160
+        type: textarea
+        size: small
         trigger:
             action: hide
             field: no_index
@@ -40,9 +38,9 @@ fields:
     keywords:
         label: utopigs.seo::lang.seo.keywords
         span: left
+        type: textarea
+        size: small
         comment: utopigs.seo::lang.seo.keywords_hint
-        attributes:
-            maxlength: 255
         trigger:
             action: hide
             field: no_index

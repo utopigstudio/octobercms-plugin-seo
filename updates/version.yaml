@@ -34,3 +34,6 @@ v1.1.25:
     - v1.1.25_add_no_index_field.php
 v1.1.26: Fix missing translation
 v1.1.27: Add canonical_url to page metas
+v1.1.28:
+    - Remove hard length limit for title, description and keywords fields
+    - v1.1.28_remove_length_limit.php
