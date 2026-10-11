@@ -45,7 +45,16 @@ fields:
             action: hide
             field: no_index
             condition: checked
-            
+    og_type:
+        label: utopigs.seo::lang.seo.og_type
+        type: dropdown
+        span: left
+        options:
+            default: utopigs.seo::lang.seo.og_type_default
+            website: utopigs.seo::lang.seo.og_type_website
+            article: utopigs.seo::lang.seo.og_type_article
+            book: utopigs.seo::lang.seo.og_type_book
+            profile: utopigs.seo::lang.seo.og_type_profile
     image:
         label: utopigs.seo::lang.seo.image
         type: fileupload

@@ -57,6 +57,12 @@ return [
         'no_index' => 'No Index',
         'no_index_comment' => 'Activate to instruct search engines not to index this page.',
         'no_index_column' => 'No Index activated',
+        'og_type' => 'Open Graph type',
+        'og_type_default' => 'Default',
+        'og_type_website' => 'Website',
+        'og_type_article' => 'Article',
+        'og_type_book' => 'Book',
+        'og_type_profile' => 'Profile',
     ],
     'seotab' => [
         'title' => 'SEO',

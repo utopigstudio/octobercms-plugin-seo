@@ -38,3 +38,6 @@ v1.1.28:
     - Remove hard length limit for title, description and keywords fields
     - v1.1.28_remove_length_limit.php
 v1.1.29: Sitemap stylesheet
+v1.1.30:
+    - Add og_type field
+    - v1.1.30_add_og_type_field.php

@@ -80,7 +80,7 @@ class SeoModel extends ComponentBase
         }
 
         //if there's no manually entered SEO data, or image is missing, try to retrieve defaults from model
-        if (!$seo || empty($seo->image)) {
+        if (!$seo || empty($seo->image) || $seo->og_type == 'default') {
             $seo_default_values = Event::fire('utopigs.seo.mapSeoData', [$this->property('pageType'), $this->page[$this->property('pageProperty')]->getKey()], true);
 
             if ($seo_default_values) {
@@ -98,10 +98,19 @@ class SeoModel extends ComponentBase
                     if (isset($seo_default_values['image'])) {
                         $seo->image = $seo_default_values['image'];
                     }
+                    if (isset($seo_default_values['og_type'])) {
+                        $seo->og_type = $seo_default_values['og_type'];
+                    }
                 }
-                //if there is seo data but image is no filled, try to fill from defaults
-                elseif (empty($seo->image) && isset($seo_default_values['image'])) {
-                    $seo->image = $seo_default_values['image'];
+                else {
+                    //if there is seo data but image is no filled, try to fill from defaults
+                    if (isset($seo_default_values['image']) && empty($seo->image)) {
+                        $seo->image = $seo_default_values['image'];
+                    }
+                    // if og_type is default, try to fill from defaults
+                    if (isset($seo_default_values['og_type']) && $seo->og_type == 'default') {
+                        $seo->og_type = $seo_default_values['og_type'];
+                    }
                 }
             }
         }
@@ -121,6 +130,9 @@ class SeoModel extends ComponentBase
         }
         if ($seo->image) {
             $this->page->seo_image = $seo->image;
+        }
+        if ($seo->og_type) {
+            $this->page->og_type = ($seo->og_type && $seo->og_type != 'default') ? $seo->og_type : 'website';
         }
     }
 }
