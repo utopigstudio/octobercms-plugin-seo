@@ -214,6 +214,12 @@ class Sitemap extends Model
 
         $urlSet = $this->makeUrlSet();
         $xml = $this->makeXmlObject();
+        $stylesheet = $xml->createProcessingInstruction(
+            'xml-stylesheet',
+            'type="text/xsl" href="' . Url::to('/plugins/utopigs/seo/assets/xsl/sitemap.xsl') . '"'
+        );
+
+        $xml->appendChild($stylesheet);
         $xml->appendChild($urlSet);
 
         return $xml->saveXML();

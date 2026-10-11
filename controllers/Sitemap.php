@@ -82,7 +82,6 @@ class Sitemap extends Controller
             $this->vars['theme'] = $theme;
             $this->vars['themeName'] = $theme->getConfigValue('name', $theme->getDirName());
             $this->vars['sitemapUrl'] = Url::to('/sitemap.xml');
-            $this->vars['sitemapUrlDebug'] = Url::to('/sitemap-debug.xml');
 
             return $result;
         }
