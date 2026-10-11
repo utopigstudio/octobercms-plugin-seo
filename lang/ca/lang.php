@@ -53,6 +53,12 @@ return [
         'no_index' => 'No index',
         'no_index_comment' => 'Activa per indicar als motors de cerca que no indexin aquesta pàgina.',
         'no_index_column' => 'No index activat',
+        'og_type' => 'Tipus d’Open Graph',
+        'og_type_default' => 'Default',
+        'og_type_website' => 'Website',
+        'og_type_article' => 'Article',
+        'og_type_book' => 'Book',
+        'og_type_profile' => 'Profile',
     ],
     'seotab' => [
         'title' => 'SEO',

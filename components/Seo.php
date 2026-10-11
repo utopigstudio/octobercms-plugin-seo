@@ -71,6 +71,7 @@ class Seo extends ComponentBase
             $this->page->meta_description = $this->page->description = $seo->description;
             $this->page->meta_keywords = $this->page->keywords = $seo->keywords;
             $this->page->seo_image = $seo->image;
+            $this->page->og_type = ($seo->og_type && $seo->og_type != 'default') ? $seo->og_type : 'website';
         } else {
             if (!$this->page->meta_title) {
                 $this->page->meta_title = $this->page->title;
