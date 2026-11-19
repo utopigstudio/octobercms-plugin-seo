@@ -41,3 +41,4 @@ v1.1.29: Sitemap stylesheet
 v1.1.30:
     - Add og_type field
     - v1.1.30_add_og_type_field.php
+v1.1.31: Fix memory leak with typeInfo cache

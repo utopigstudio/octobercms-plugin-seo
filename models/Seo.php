@@ -60,6 +60,20 @@ class Seo extends Model
 
     private $firstTypeInDropdown = NULL;
 
+    protected static $typeInfoCache = [];
+
+    protected function getTypeInfo($type)
+    {
+        $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
+        $cacheKey = $eventType.'|'.$type;
+
+        if (!array_key_exists($cacheKey, static::$typeInfoCache)) {
+            static::$typeInfoCache[$cacheKey] = Event::fire($eventType.'.getTypeInfo', [$type]);
+        }
+
+        return static::$typeInfoCache[$cacheKey];
+    }
+
     public function getTypeOptions()
     {
         $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
@@ -86,7 +100,7 @@ class Seo extends Model
                     if (is_null($this->firstTypeInDropdown)) {
                         $this->firstTypeInDropdown = $typeCode;
                     }
-                    $apiResult2 = Event::fire($eventType.'.getTypeInfo', [$typeCode]);
+                    $apiResult2 = $this->getTypeInfo($typeCode);
                     if (is_array($apiResult2)) {
                         foreach ($apiResult2 as $typeInfo) {
                             if (isset($typeInfo['references'])) {
@@ -108,8 +122,6 @@ class Seo extends Model
 
     public function getReferenceOptions()
     {
-        $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
-
         $type = $this->type ?? $this->firstTypeInDropdown;
         if (is_null($type)) {
             $type = 'cms-page';
@@ -127,7 +139,7 @@ class Seo extends Model
             }
         }
 
-        $apiResult = Event::fire($eventType.'.getTypeInfo', [$type]);
+        $apiResult = $this->getTypeInfo($type);
 
         $items = [];
 
@@ -191,9 +203,7 @@ class Seo extends Model
 
     public function getModelTitleAttribute()
     {
-        $eventType = Settings::get('events_type_to_launch', 'pages.menuitem');
-
-        $apiResult = Event::fire($eventType.'.getTypeInfo', [$this->type]);
+        $apiResult = $this->getTypeInfo($this->type);
 
         if (is_array($apiResult)) {
 
