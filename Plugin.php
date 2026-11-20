@@ -1,8 +1,9 @@
 <?php namespace Utopigs\Seo;
 
+use Backend;
+use BackendAuth;
 use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
-use Backend;
 
 class Plugin extends PluginBase
 {
@@ -42,6 +43,10 @@ class Plugin extends PluginBase
                 'tab' => 'utopigs.seo::lang.plugin.name',
                 'label' => 'utopigs.seo::lang.plugin.manage_seo'
             ],
+            'utopigs.seo.manage.list' => [
+                'tab' => 'utopigs.seo::lang.plugin.name',
+                'label' => 'utopigs.seo::lang.plugin.access_seo_list',
+            ],
             'utopigs.seo.sitemap' => [
                 'tab' => 'utopigs.seo::lang.plugin.name',
                 'label' => 'utopigs.seo::lang.plugin.manage_sitemap',
@@ -54,20 +59,26 @@ class Plugin extends PluginBase
     }
 
     public function registerNavigation() {
+        $user = BackendAuth::getUser();
+        $menuUrl = Backend::url('utopigs/seo/seo');
+        if ($user && !$user->hasAccess('utopigs.seo.manage.list') && $user->hasAccess('utopigs.seo.sitemap')) {
+            $menuUrl = Backend::url('utopigs/seo/sitemap');
+        }
+
         $menu =  [
             'seo' => [
                 'label' => 'utopigs.seo::lang.plugin.name',
                 'description' => 'utopigs.seo::lang.plugin.description',
                 'icon' => 'icon-line-chart',
                 'iconSvg' => 'plugins/utopigs/seo/assets/images/seo-icon.svg',
-                'url' => Backend::url('utopigs/seo/seo'),
-                'permissions' => ['utopigs.seo.manage'],
+                'url' => $menuUrl,
+                'permissions' => ['utopigs.seo.manage.list', 'utopigs.seo.sitemap'],
                 'sideMenu' => [
                     'seo' => [
                         'label' => 'utopigs.seo::lang.seo.menu',
                         'icon' => 'icon-line-chart',
                         'url' => Backend::url('utopigs/seo/seo'),
-                        'permissions' => ['utopigs.seo.manage'],
+                        'permissions' => ['utopigs.seo.manage.list'],
                     ],
                     'sitemap' => [
                         'label' => 'utopigs.seo::lang.sitemap.menu',

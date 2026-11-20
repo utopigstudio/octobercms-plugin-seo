@@ -42,14 +42,22 @@ class SeoTab extends FormWidgetBase
         $seo = \Utopigs\Seo\Models\Seo::where('type', $this->pageType)
             ->where('reference', $this->model->getKey())->first();
 
+        $backUrl = $this->getRecordBackUrl();
+
         if ($seo) {
             $this->vars['seoData'] = $seo;
-            $this->vars['editSeoUrl'] = Backend::url('utopigs/seo/seo/update/'.$seo->id . '?back='.url()->current());
+            $this->vars['editSeoUrl'] = Backend::url('utopigs/seo/seo/update/'.$seo->id).'?'.http_build_query([
+                'back' => $backUrl,
+            ]);
             $this->partial = 'seotab_seodata';
             return;
         }
 
-        $this->vars['editSeoUrl'] = Backend::url('utopigs/seo/seo/create?type='.$this->pageType.'&reference='.$this->model->getKey().'&back='.url()->current());
+        $this->vars['editSeoUrl'] = Backend::url('utopigs/seo/seo/create').'?'.http_build_query([
+            'type' => $this->pageType,
+            'reference' => $this->model->getKey(),
+            'back' => $backUrl,
+        ]);
 
         $currentLocale = \App::getLocale();
         // october 2
@@ -97,6 +105,43 @@ class SeoTab extends FormWidgetBase
 
         $translator->setLocale($currentLocale, false);
 
+    }
+
+    protected function getRecordBackUrl(): string
+    {
+        $url = url()->current();
+        $anchor = $this->getSeoTabAnchor();
+
+        if ($anchor) {
+            $url .= '#'.$anchor;
+        }
+
+        return $url;
+    }
+
+    protected function getSeoTabAnchor(): ?string
+    {
+        $form = $this->getParentForm();
+        if (!$form) {
+            return null;
+        }
+
+        foreach (['primary', 'secondary'] as $section) {
+            $tabs = $form->getTab($section);
+            if (!$tabs) {
+                continue;
+            }
+
+            $index = 0;
+            foreach ($tabs->getFields() as $tabName => $fields) {
+                $index++;
+                if (array_key_exists($this->fieldName, $fields)) {
+                    return $tabs->getPaneAnchorId($index, $tabName);
+                }
+            }
+        }
+
+        return null;
     }
 
 }

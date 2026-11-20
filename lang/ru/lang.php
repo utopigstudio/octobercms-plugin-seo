@@ -5,6 +5,7 @@ return [
         'name' => 'SEO',
         'description' => 'Multi-lingual SEO & Sitemap',
         'manage_seo' => 'Управление SEO',
+        'access_seo_list' => 'Доступ к полному списку SEO-записей',
         'manage_sitemap' => 'Управление картой сайта',
         'configure' => 'Настройка SEO',
     ],

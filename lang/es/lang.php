@@ -5,6 +5,7 @@ return [
         'name' => 'SEO',
         'description' => 'SEO y sitemap multidioma',
         'manage_seo' => 'Gestionar el SEO',
+        'access_seo_list' => 'Acceder a la lista completa de registros SEO',
         'manage_sitemap' => 'Gestionar las definiciones del mapa del sitio',
         'configure' => 'Configurar los ajustes SEO',
     ],

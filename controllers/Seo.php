@@ -1,6 +1,7 @@
 <?php namespace Utopigs\Seo\Controllers;
 
 use Backend;
+use BackendAuth;
 use BackendMenu;
 use File;
 use Lang;
@@ -9,6 +10,7 @@ use Str;
 use System\Classes\SettingsManager;
 use League\Csv\Reader as CsvReader;
 use ApplicationException;
+use October\Rain\Exception\ForbiddenException;
 use October\Rain\Filesystem\Zip;
 use Redirect;
 
@@ -28,7 +30,7 @@ class Seo extends \Backend\Classes\Controller {
     protected $importUploadFormWidgetCustom;
     protected $importOptionsFormWidget;
 
-    public $requiredPermissions = ['utopigs.seo.manage'];
+    public $requiredPermissions = ['utopigs.seo.manage', 'utopigs.seo.manage.list'];
 
     protected $backUrl = '';
 
@@ -37,6 +39,9 @@ class Seo extends \Backend\Classes\Controller {
         parent::__construct();
         BackendMenu::setContext('Utopigs.Seo', 'seo', 'seo');
 
+        $back = get('back');
+        $this->backUrl = is_string($back) && $back !== '' ? $back : Backend::url('utopigs/seo/seo');
+
         //custom import form widget that allows zip files
         if ($this->importUploadFormWidgetCustom = $this->makeImportUploadFormWidget()) {
             $this->importUploadFormWidgetCustom->bindToController();
@@ -44,28 +49,35 @@ class Seo extends \Backend\Classes\Controller {
 
     }
 
-    public function update_onSave($context = null)
+    public function beforeDisplay()
     {
-        $return = parent::update_onSave($context);
+        $listActions = ['index', 'import', 'export'];
 
-        $params = app()->request->all();
-        if (!empty($params['back'])) {
-            return Redirect::to($params['back']);
+        if (in_array($this->action, $listActions, true)) {
+            if (!BackendAuth::userHasAccess('utopigs.seo.manage.list')) {
+                throw new ForbiddenException;
+            }
+
+            return;
         }
 
-        return $return;
+        if (!BackendAuth::userHasAccess('utopigs.seo.manage')) {
+            throw new ForbiddenException;
+        }
+    }
+
+    public function update_onSave($context = null)
+    {
+        parent::update_onSave($context);
+
+        return Redirect::to($this->backUrl);
     }
 
     public function create_onSave($context = null)
     {
-        $return = parent::create_onSave($context);
+        parent::create_onSave($context);
 
-        $params = app()->request->all();
-        if (!empty($params['back'])) {
-            return Redirect::to($params['back']);
-        }
-
-        return $return;
+        return Redirect::to($this->backUrl);
     }
 
     //override import method to allow zip files
