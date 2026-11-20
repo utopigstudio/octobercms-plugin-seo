@@ -46,6 +46,10 @@ class Plugin extends PluginBase
                 'tab' => 'utopigs.seo::lang.plugin.name',
                 'label' => 'utopigs.seo::lang.plugin.manage_sitemap',
             ],
+            'utopigs.seo.configure' => [
+                'tab' => 'utopigs.seo::lang.plugin.name',
+                'label' => 'utopigs.seo::lang.plugin.configure',
+            ],
         ];
     }
 
@@ -94,7 +98,7 @@ class Plugin extends PluginBase
                 'description' => 'utopigs.seo::lang.settings.description',
                 'class' => 'Utopigs\Seo\Models\Settings',
                 'order' => 600,
-                'permissions' => ['utopigs.seo.manage']
+                'permissions' => ['utopigs.seo.configure']
             ]
         ];
     }

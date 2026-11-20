@@ -6,6 +6,7 @@ return [
         'description' => 'Multi-lingual SEO & Sitemap',
         'manage_seo' => 'Управление SEO',
         'manage_sitemap' => 'Управление картой сайта',
+        'configure' => 'Настройка SEO',
     ],
     'component_seo' => [
         'name' => 'SEO Core',

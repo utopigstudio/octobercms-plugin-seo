@@ -6,6 +6,7 @@ return [
         'description' => 'Multi-lingual SEO & Sitemap',
         'manage_seo' => 'Manage SEO',
         'manage_sitemap' => 'Access sitemap definitions page',
+        'configure' => 'Configure SEO settings',
     ],
     'component_seo' => [
         'name' => 'SEO',

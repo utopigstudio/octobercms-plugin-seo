@@ -6,6 +6,7 @@ return [
         'description' => 'SEO i sitemap muldidioma',
         'manage_seo' => 'Gestionar el SEO',
         'manage_sitemap' => 'Gestionar les definicions del sitemap',
+        'configure' => 'Configurar els ajustos SEO',
     ],
     'component_seo' => [
         'name' => 'SEO',
