@@ -63,6 +63,13 @@ class Sitemap extends Model
      */
     protected $protocol = 'http';
 
+    /**
+     * Normalized primary-locale URLs of records with noindex enabled.
+     *
+     * @var array<string, true>
+     */
+    protected $noIndexUrls = [];
+
     public function beforeSave()
     {
         $this->data = (array) $this->items;
@@ -99,6 +106,15 @@ class Sitemap extends Model
         $translator = \RainLab\Translate\Classes\Translator::instance();
         $translator->setLocale($defaultLocale, false);
 
+        $this->noIndexUrls = $this->resolveNoIndexUrls(
+            $eventType,
+            $theme,
+            $currentUrl,
+            $defaultLocale,
+            $alternateLocales,
+            $translator
+        );
+
         /*
          * Cycle each page and add its URL
          */
@@ -108,24 +124,16 @@ class Sitemap extends Model
              * Explicit URL
              */
             if ($item->type == 'url') {
-                $this->addItemToSet($item, Url::to($item->url));
+                $url = Url::to($item->url);
+                if (!$this->isNoIndexUrl($url)) {
+                    $this->addItemToSet($item, $url);
+                }
             }
             /*
              * Registered sitemap type
              */
             else {
-                if ($item->type == 'blog-category' || $item->type == 'all-blog-categories' && class_exists("\RainLab\Blog\Models\Category")) {
-                    $apiResult = self::blogCategoryResolveMenuItem($item, $theme);
-                }
-                elseif ($item->type == 'blog-post' || $item->type == 'all-blog-posts' && class_exists("\RainLab\Blog\Models\Post")) {
-                    $apiResult = self::blogPostResolveMenuItem($item, $theme);
-                }
-                elseif ($item->type == 'static-page' || $item->type == 'all-static-pages' && class_exists("\RainLab\Pages\Classes\Page")) {
-                    $apiResult = self::staticPageResolveMenuItem($item, $theme);
-                }
-                else {
-                    $apiResult = Event::fire($eventType.'.resolveItem', [$item->type, $item, $currentUrl, $theme]);
-                }
+                $apiResult = $this->resolveSitemapApiResult($item, $eventType, $theme, $currentUrl);
 
                 if (!is_array($apiResult)) {
                     continue;
@@ -140,45 +148,18 @@ class Sitemap extends Model
                      * Single item
                      */
                     if (isset($itemInfo['url'])) {
-                        $url = $itemInfo['url'];
-                        $alternateLocaleUrls = [];
+                        [$url, $alternateLocaleUrls] = $this->resolveItemUrls(
+                            $item,
+                            $itemInfo,
+                            $theme,
+                            $defaultLocale,
+                            $alternateLocales,
+                            $translator
+                        );
 
-                        if ($item->type == 'cms-page') {
-                            $url = $itemInfo['url'];
-                            if (isset($itemInfo['sites'])) { // October 3
-                                foreach ($itemInfo['sites'] as $site) {
-                                    $alternateLocaleUrls[$site['locale']] = $site['url'];
-                                }
-                            } else { // October 2
-                                $page = Page::loadCached($theme, $item->reference);
-                                $router = new RainRouter;
-
-                                if ($page->hasTranslatablePageUrl($defaultLocale)) {
-                                    $page->rewriteTranslatablePageUrl($defaultLocale);
-                                }
-
-                                $url = $translator->getPathInLocale($page->url, $defaultLocale);
-                                $url = $router->urlFromPattern($url);
-                                $url = Url::to($url);
-
-                                if (count($alternateLocales) > 1) {
-                                    foreach ($alternateLocales as $locale) {
-                                        if ($page->hasTranslatablePageUrl($locale)) {
-                                            $page->rewriteTranslatablePageUrl($locale);
-                                        }
-                                        $altUrl = $translator->getPathInLocale($page->url, $locale);
-                                        $altUrl = $router->urlFromPattern($altUrl);
-                                        $alternateLocaleUrls[$locale] = Url::to($altUrl);
-                                    }
-                                }
-                            }
+                        if (!$this->isNoIndexUrl($this->primaryLocaleUrl($url, $alternateLocaleUrls, $defaultLocale))) {
+                            $this->addItemToSet($item, $url, array_get($itemInfo, 'mtime'), $alternateLocaleUrls);
                         }
-
-                        if (isset($itemInfo['alternate_locale_urls'])) {
-                            $alternateLocaleUrls = $itemInfo['alternate_locale_urls'];
-                        }
-
-                        $this->addItemToSet($item, $url, array_get($itemInfo, 'mtime'), $alternateLocaleUrls);
                     }
 
                     /*
@@ -188,7 +169,7 @@ class Sitemap extends Model
 
                         $parentItem = $item;
 
-                        $itemIterator = function($items) use (&$itemIterator, $parentItem)
+                        $itemIterator = function($items) use (&$itemIterator, $parentItem, $defaultLocale)
                         {
                             foreach ($items as $item) {
                                 if (isset($item['url'])) {
@@ -196,7 +177,9 @@ class Sitemap extends Model
                                     if (isset($item['alternate_locale_urls'])) {
                                         $alternateLocaleUrls = $item['alternate_locale_urls'];
                                     }
-                                    $this->addItemToSet($parentItem, $item['url'], array_get($item, 'mtime'), $alternateLocaleUrls);
+                                    if (!$this->isNoIndexUrl($this->primaryLocaleUrl($item['url'], $alternateLocaleUrls, $defaultLocale))) {
+                                        $this->addItemToSet($parentItem, $item['url'], array_get($item, 'mtime'), $alternateLocaleUrls);
+                                    }
                                 }
 
                                 if (isset($item['items'])) {
@@ -223,6 +206,202 @@ class Sitemap extends Model
         $xml->appendChild($urlSet);
 
         return $xml->saveXML();
+    }
+
+    /**
+     * Resolve every SEO record with noindex and keep its primary-locale URL.
+     * noindex applies to the whole record, so secondary locales are not checked.
+     *
+     * @return array<string, true>
+     */
+    protected function resolveNoIndexUrls($eventType, $theme, $currentUrl, string $defaultLocale, array $alternateLocales, $translator): array
+    {
+        $urls = [];
+
+        foreach (Seo::where('no_index', true)->get() as $seo) {
+            $item = new SitemapItem;
+            $item->type = $seo->type;
+            $item->reference = $seo->reference;
+
+            $apiResult = $this->resolveSitemapApiResult($item, $eventType, $theme, $currentUrl);
+            if (!is_array($apiResult)) {
+                continue;
+            }
+
+            foreach ($apiResult as $itemInfo) {
+                if (!is_array($itemInfo)) {
+                    continue;
+                }
+
+                if (isset($itemInfo['url'])) {
+                    [$url, $alternateLocaleUrls] = $this->resolveItemUrls(
+                        $item,
+                        $itemInfo,
+                        $theme,
+                        $defaultLocale,
+                        $alternateLocales,
+                        $translator
+                    );
+                    $this->rememberNoIndexUrl($urls, $this->primaryLocaleUrl($url, $alternateLocaleUrls, $defaultLocale));
+                }
+
+                if (isset($itemInfo['items']) && is_array($itemInfo['items'])) {
+                    $this->rememberNoIndexItems($urls, $itemInfo['items'], $defaultLocale);
+                }
+            }
+        }
+
+        return $urls;
+    }
+
+    /**
+     * @param array<string, true> $urls
+     * @param array $items
+     */
+    protected function rememberNoIndexItems(array &$urls, array $items, string $defaultLocale): void
+    {
+        foreach ($items as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            if (isset($item['url'])) {
+                $alternateLocaleUrls = [];
+                if (isset($item['alternate_locale_urls']) && is_array($item['alternate_locale_urls'])) {
+                    $alternateLocaleUrls = $item['alternate_locale_urls'];
+                }
+                $this->rememberNoIndexUrl($urls, $this->primaryLocaleUrl($item['url'], $alternateLocaleUrls, $defaultLocale));
+            }
+
+            if (isset($item['items']) && is_array($item['items'])) {
+                $this->rememberNoIndexItems($urls, $item['items'], $defaultLocale);
+            }
+        }
+    }
+
+    /**
+     * @param array<string, true> $urls
+     */
+    protected function rememberNoIndexUrl(array &$urls, ?string $url): void
+    {
+        $normalized = $this->normalizeSitemapUrl($url);
+        if ($normalized) {
+            $urls[$normalized] = true;
+        }
+    }
+
+    protected function resolveSitemapApiResult($item, $eventType, $theme, $currentUrl)
+    {
+        if ($item->type == 'blog-category' || $item->type == 'all-blog-categories' && class_exists("\RainLab\Blog\Models\Category")) {
+            return self::blogCategoryResolveMenuItem($item, $theme);
+        }
+
+        if ($item->type == 'blog-post' || $item->type == 'all-blog-posts' && class_exists("\RainLab\Blog\Models\Post")) {
+            return self::blogPostResolveMenuItem($item, $theme);
+        }
+
+        if ($item->type == 'static-page' || $item->type == 'all-static-pages' && class_exists("\RainLab\Pages\Classes\Page")) {
+            return self::staticPageResolveMenuItem($item, $theme);
+        }
+
+        return Event::fire($eventType.'.resolveItem', [$item->type, $item, $currentUrl, $theme]);
+    }
+
+    /**
+     * @return array{0: string, 1: array}
+     */
+    protected function resolveItemUrls($item, array $itemInfo, $theme, string $defaultLocale, array $alternateLocales, $translator): array
+    {
+        $url = $itemInfo['url'];
+        $alternateLocaleUrls = [];
+
+        if ($item->type == 'cms-page') {
+            $url = $itemInfo['url'];
+            if (isset($itemInfo['sites'])) { // October 3
+                foreach ($itemInfo['sites'] as $site) {
+                    $alternateLocaleUrls[$site['locale']] = $site['url'];
+                }
+            } else { // October 2
+                $page = Page::loadCached($theme, $item->reference);
+                $router = new RainRouter;
+
+                if ($page->hasTranslatablePageUrl($defaultLocale)) {
+                    $page->rewriteTranslatablePageUrl($defaultLocale);
+                }
+
+                $url = $translator->getPathInLocale($page->url, $defaultLocale);
+                $url = $router->urlFromPattern($url);
+                $url = Url::to($url);
+
+                if (count($alternateLocales) > 1) {
+                    foreach ($alternateLocales as $locale) {
+                        if ($page->hasTranslatablePageUrl($locale)) {
+                            $page->rewriteTranslatablePageUrl($locale);
+                        }
+                        $altUrl = $translator->getPathInLocale($page->url, $locale);
+                        $altUrl = $router->urlFromPattern($altUrl);
+                        $alternateLocaleUrls[$locale] = Url::to($altUrl);
+                    }
+                }
+            }
+        }
+
+        if (isset($itemInfo['alternate_locale_urls'])) {
+            $alternateLocaleUrls = $itemInfo['alternate_locale_urls'];
+        }
+
+        return [$url, $alternateLocaleUrls];
+    }
+
+    /**
+     * noindex is stored once per record. Match the primary locale only.
+     */
+    protected function primaryLocaleUrl(?string $url, array $alternateLocaleUrls, string $defaultLocale): ?string
+    {
+        if (!empty($alternateLocaleUrls[$defaultLocale])) {
+            return $alternateLocaleUrls[$defaultLocale];
+        }
+
+        return $url ?: null;
+    }
+
+    protected function isNoIndexUrl(?string $url): bool
+    {
+        $normalized = $this->normalizeSitemapUrl($url);
+
+        return $normalized !== null && isset($this->noIndexUrls[$normalized]);
+    }
+
+    protected function normalizeSitemapUrl(?string $url): ?string
+    {
+        if (!$url) {
+            return null;
+        }
+
+        $url = trim($url);
+        $parts = parse_url($url);
+        if ($parts === false || empty($parts['host'])) {
+            $trimmed = rtrim($url, '/');
+
+            return $trimmed !== '' ? $trimmed : $url;
+        }
+
+        $path = $parts['path'] ?? '/';
+        if ($path !== '/') {
+            $path = rtrim($path, '/');
+        }
+
+        $normalized = strtolower($parts['scheme'] ?? 'http').'://'.strtolower($parts['host']);
+        if (isset($parts['port'])) {
+            $normalized .= ':'.$parts['port'];
+        }
+        $normalized .= $path;
+
+        if (!empty($parts['query'])) {
+            $normalized .= '?'.$parts['query'];
+        }
+
+        return $normalized;
     }
 
     protected function makeXmlObject()
